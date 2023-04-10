@@ -1,0 +1,34 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Description de la reponse </th>
+            <th scope="col"> Date de la reponse </th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rep in reponse %}
+    <tr>
+      <td>{{ rep.id_reponse }}</td>
+      <td>{{ rep.description_reponse }}</td>
+                      <td>{{ rep.date_reponse ? rep.date_reponse |date('Y-m-d') : '' }}</td>
+
+      <td>
+        <div class="btn-group" role="group">
+          <a href="{{ path('app_edit_reponse', {'id': rep.id_reponse}) }}" class="btn btn-primary btn-sm">Modifier</a>
+          <form action="{{ path('app_delete_reponse', {'id': rep.id_reponse}) }}" method="post" style="display: inline-block;">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')">Supprimer</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier reponse{% endblock %}
+
+{% block body %}
+    <h1>Modifier reponse</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.description_reponse) }}
+
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}
