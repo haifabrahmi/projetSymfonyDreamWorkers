@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}  
+<table class="table table-hover">
+{# <div class="d-flex justify-content-center" style="margin-bottom:150px"> #}
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">date entretien </th>
+      <th scope="col">description </th>
+      <th scope="col">Bus</th>
+       
+       <th scope="col">action</th>
+      
+  </thead>
+  <tbody>
+    {% for m in maintenances %}
+    <tr>
+      <td>{{ m.id_m }}</td>
+      <td>{{ m.date_entretien |date('Y-m-d H:i:s')}}</td>
+      <td>{{ m.description }}</td>
+      <td>{{ m.bus.id_bus }}</td>
+      
+      
+      <td>
+   <div class="btn-group" role="group">
+   <a href="{{ path('app_edit_maintenance', {'id': m.id_m}) }}" class="btn btn-primary btn-sm">Modifier</a>
+
+       <form action="{{ path('app_delete_maintenance', {'id': m.id_m}) }}" method="post" style="display: inline-block;">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')">Supprimer</button>
+          </form> 
+          </div>
+  </td> 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  {% endblock %}  

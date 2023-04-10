@@ -1,0 +1,5 @@
+
+        # app/config/parameters.yaml
+parameters:
+    projetsymfony: 'C:/symfony/projetsymfony'
+    bus_images_directory: '%projetsymfony%/public/images/bus'

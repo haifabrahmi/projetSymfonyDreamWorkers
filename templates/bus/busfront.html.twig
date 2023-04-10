@@ -1,0 +1,47 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Bus index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1>Ajouter un bus</h1>
+
+                {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.modele) }}
+                        {{ form_widget(form.modele, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.numero_de_plaque) }}
+                        {{ form_widget(form.numero_de_plaque, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.capacite) }}
+                        {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.destination) }}
+                        {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.date_depart) }}
+                        {{ form_widget(form.date_depart, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.date_arrive) }}
+                        {{ form_widget(form.date_arrive, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                   <div class="form-group">
+               {{ form_label(form.image) }}
+                {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
+</div>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(form) }}
+
+                <a href="{{ path('app_list_bus') }}">Retour à la liste des bus</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

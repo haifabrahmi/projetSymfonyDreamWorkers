@@ -1,0 +1,18 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+app_bus:
+    path: /bus/new
+    controller: App\Controller\BusController::new
+    defaults:
+        _arguments: ['@App\Service\FileUploader']
+app_maintenance_edit:
+    path: '/maintenance/{id}/edit'
+    controller: App\Controller\MaintenanceController::edit
+    methods: ['GET', 'POST']
+app_list_maintenance:
+    path: '/maintenance/list'
+    controller: App\Controller\MaintenanceController::list
+    methods: ['GET']

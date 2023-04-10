@@ -1,0 +1,79 @@
+
+{% extends 'back.html.twig' %}
+
+{% block title %}Bus index{% endblock %}
+{% block body %}
+
+
+<div class="header">
+  <div class="header-content">
+    <nav class="navbar navbar-expand">
+      <div class="collapse navbar-collapse justify-content-between">
+        <div class="header-left">
+          <div class="search_bar dropdown">
+            <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+              <i class="mdi mdi-magnify"></i>
+            </span>
+            <div class="dropdown-menu p-0 m-0">
+              <form action="{{ path('app_list_bus') }}" method="GET">
+                <input class="form-control" type="search" name="modele" placeholder="Recherche par modèle" aria-label="Recherche par modèle" value="{{ searchQuery }}">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <!-- autres éléments de la barre de navigation ici -->
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+
+
+<table class="table table-hover">
+{# <div class="d-flex justify-content-center" style="margin-bottom:150px"> #}
+ 
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">modele </th>
+      <th scope="col">numero de plaque </th>
+      <th scope="col">capacite</th>
+      <th scope="col">date de depart</th>
+      <th scope="col">date d'arrivee</th> 
+      <th scope="col">destination</th>
+      <th scope="col">image</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for bus in buses %}
+    <tr>
+      <td>{{ bus.id_bus }}</td>
+      <td>{{ bus.modele }}</td>
+      <td>{{ bus.numero_de_plaque }}</td>
+      <td>{{ bus.capacite }}</td>
+      <td>{{ bus.date_depart|date('Y-m-d H:i:s') }}</td>
+      <td>{{ bus.date_arrive|date('Y-m-d H:i:s') }}</td>
+      <td>{{ bus.destination }}</td>
+      <td>{{ bus.image}}</td>
+      <td>
+        <div class="btn-group" role="group">
+        
+          <a href="{{ path('app_edit_bus', {'id': bus.id_bus}) }}" class="btn btn-primary btn-sm">Modifier</a>
+          <form action="{{ path('app_delete_bus', {'id': bus.id_bus}) }}" method="post" style="display: inline-block;">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')">Supprimer</button>
+          </form> 
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

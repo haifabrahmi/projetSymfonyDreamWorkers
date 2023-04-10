@@ -1,0 +1,38 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Bus index{% endblock %}
+
+{% block body %}
+   
+
+ <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1>Modifier une maintenance</h1>
+
+                {{ form_start(form) }}
+                     <div class="form-group">
+                        {{ form_label(form.date_entretien) }}
+                        {{ form_widget(form.date_entretien, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    
+                   
+                     
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                {{ form_end(form) }}
+
+                <a href="{{ path('app_list_maintenance') }}">Retour à la liste des maintenances</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
