@@ -1,0 +1,42 @@
+{% extends 'basepage.html.twig' %}
+
+{% block title %}Stations{% endblock %}
+
+{% block display %}Stations{% endblock %}
+
+{% block breadcrumb %}Stations{% endblock %}
+
+{% block content %}
+    <h1>Station</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>NomS</th>
+                <td>{{ station.nomS }}</td>
+            </tr>
+            <tr>
+                <th>AdresseS</th>
+                <td>{{ station.adresseS }}</td>
+            </tr>
+            <tr>
+                <th>LigneS</th>
+                <td>{{ station.ligneS }}</td>
+            </tr>
+            <tr>
+                <th>HoraireS</th>
+                <td>{{ station.horaireS ? station.horaireS|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EquipementS</th>
+                <td>{{ station.equipementS }}</td>
+            </tr>
+            <tr>
+                <th>CommentaireS</th>
+                <td>{{ station.commentaireS }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_station_index') }}">back to list</a>
+{% endblock %}

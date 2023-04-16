@@ -1,0 +1,38 @@
+{% extends 'basepage.html.twig' %}
+
+{% block title %}Circuits{% endblock %}
+
+{% block display %}Circuits{% endblock %}
+
+{% block breadcrumb %}Circuits{% endblock %}
+
+{% block content %}
+    <h1>Circuit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>NomC</th>
+                <td>{{ circuit.nomC }}</td>
+            </tr>
+            <tr>
+                <th>ListeC</th>
+                <td>{{ circuit.listeC }}</td>
+            </tr>
+            <tr>
+                <th>NbrbusC</th>
+                <td>{{ circuit.nbrbusC }}</td>
+            </tr>
+            <tr>
+                <th>HoraireC</th>
+                <td>{{ circuit.horaireC ? circuit.horaireC|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DistanceC</th>
+                <td>{{ circuit.distanceC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_circuit_index') }}">back to list</a>
+{% endblock %}

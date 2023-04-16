@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Station index{% endblock %}
+
+{% block body %}
+    <h1>Station index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NomS</th>
+                <th>AdresseS</th>
+                <th>LigneS</th>
+                <th>HoraireS</th>
+                <th>EquipementS</th>
+                <th>CommentaireS</th>
+                <th>Circuit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station.nomS }}</td>
+                <td>{{ station.adresseS }}</td>
+                <td>{{ station.ligneS }}</td>
+                <td>{{ station.horaireS ? station.horaireS|date('Y-m-d') : '' }}</td>
+                <td>{{ station.equipementS }}</td>
+                <td>{{ station.commentaireS }}</td>
+                <td>{{ station.idC }}</td>
+                <td>
+                    <a href="{{ path('admin_station_show', {'idS': station.idS}) }}">show</a>
+                    <a href="{{ path('admin_station_edit', {'idS': station.idS}) }}">edit</a>
+
+    {{ include('stationAdmin/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_station_new') }}">Create new</a>
+{% endblock %}

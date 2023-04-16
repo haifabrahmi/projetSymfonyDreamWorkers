@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Station{% endblock %}
+
+{% block body %}
+    <h1>Station</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>NomS</th>
+                <td>{{ station.nomS }}</td>
+            </tr>
+            <tr>
+                <th>AdresseS</th>
+                <td>{{ station.adresseS }}</td>
+            </tr>
+            <tr>
+                <th>LigneS</th>
+                <td>{{ station.ligneS }}</td>
+            </tr>
+            <tr>
+                <th>HoraireS</th>
+                <td>{{ station.horaireS ? station.horaireS|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EquipementS</th>
+                <td>{{ station.equipementS }}</td>
+            </tr>
+            <tr>
+                <th>CommentaireS</th>
+                <td>{{ station.commentaireS }}</td>
+            </tr>
+            <tr>
+                <th>Circuit</th>
+                <td>{{ station.idC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_station_index') }}">back to list</a>
+
+    <a href="{{ path('admin_station_edit', {'idS': station.idS}) }}">edit</a>
+
+    {{ include('stationAdmin/_delete_form.html.twig') }}
+{% endblock %}
