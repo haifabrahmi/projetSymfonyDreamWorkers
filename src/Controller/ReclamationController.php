@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use App\Repository\ReclamationRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,15 +21,22 @@ class ReclamationController extends AbstractController
    
     #[Route('/reclamation/list', name: 'app_list_reclamation')]
     public function getAllClass(ReclamationRepository $repo) : Response
-    {
-        //recuperer la liste des classes 
-        $reclam=$repo->findall();
+{
+    //recuperer la liste des reclamations
+    $reclam = $repo->findAll();
 
-        //retourner view list et envoyer la liste des classes 
-        return $this->render('reclamation/list.html.twig', [
-            'reclamation' => $reclam,
-        ]);
-    }
+    //trier par etatReclamation (en inversant l'ordre pour afficher 1 avant 0)
+    usort($reclam, function($a, $b) {
+        return strcmp($b->getEtatReclamation(), $a->getEtatReclamation());
+    });
+
+    //retourner view list et envoyer la liste des reclamations triée
+    return $this->render('reclamation/list.html.twig', [
+        'reclamation' => $reclam,
+    ]);
+}
+
+
     #[Route('/reclamation/add',name:'app_list_add')]
     public function new(Request $request) : Response
     {
@@ -81,13 +91,18 @@ public function edit(Request $request, EntityManagerInterface $entityManager, Re
 #[Route('/reclamation/list1', name: 'app_list_reclamation1')]
     public function afficher(ReclamationRepository $repo) : Response
     {
-        //recuperer la liste des classes 
-        $reclam=$repo->findall();
+        //recuperer la liste des reclamations
+    $reclam = $repo->findAll();
 
-        //retourner view list et envoyer la liste des classes 
-        return $this->render('reclamation/listB.html.twig', [
-            'reclamation' => $reclam,
-        ]);
+    //trier par etatReclamation (en inversant l'ordre pour afficher 1 avant 0)
+    usort($reclam, function($a, $b) {
+        return strcmp($b->getEtatReclamation(), $a->getEtatReclamation());
+    });
+
+    //retourner view list et envoyer la liste des reclamations triée
+    return $this->render('reclamation/listB.html.twig', [
+        'reclamation' => $reclam,
+    ]);
     }
 
     #[Route('/reclamation/{id}/reponse/add', name: 'app_add_reponse')]
@@ -129,10 +144,38 @@ public function addReponse(Request $request, $id)
 }
 
 
+//Exporter pdf (composer require dompdf/dompdf)
+    /**
+     * @Route("/pdf", name="PDF_Reclamation", methods={"GET"})
+     */
+    public function pdf(ReclamationRepository $reclamationRepository)
+{
+    // Configure Dompdf according to your needs
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Arial');
 
+    // Instantiate Dompdf with our options
+    $dompdf = new Dompdf();
+    // Retrieve the HTML generated in our twig file
+    $html = $this->renderView('reclamation/pdf.html.twig', [
+        'reclamation' => $reclamationRepository->findAll(),
+    ]);
 
+    // Load HTML to Dompdf
+    $dompdf->loadHtml($html);
+    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+    $dompdf->setPaper('A3', 'portrait');
 
+    // Render the HTML as PDF
+    $dompdf->render();
 
+    // Output the generated PDF to Browser (inline view)
+    $output = $dompdf->output();
+    $response = new Response($output);
+    $response->headers->set('Content-Type', 'application/pdf');
+
+    return $response;
+}
 
 
 }

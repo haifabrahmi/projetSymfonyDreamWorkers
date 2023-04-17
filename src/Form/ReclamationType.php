@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class ReclamationType extends AbstractType
 {
@@ -58,6 +59,8 @@ class ReclamationType extends AbstractType
             'attr' => ['placeholder' => 'Date...'],
             'constraints' => [
                 new Assert\NotBlank(),
+                new GreaterThanOrEqual('today'),
+
             ],
         ]);
 }

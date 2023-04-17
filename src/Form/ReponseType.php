@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class ReponseType extends AbstractType
 {
@@ -23,11 +24,12 @@ class ReponseType extends AbstractType
                     new Assert\Length(['max' => 255]),
                 ],
             ])
-            ->add('date_reponse', DateType::class, [
+           -> add('date_reponse', DateType::class, [
                 'widget' => 'single_text',
                 'attr' => ['placeholder' => 'Date...'],
                 'constraints' => [
                     new Assert\NotBlank(),
+                    new GreaterThanOrEqual('today'),
                 ],
             ]);
     }

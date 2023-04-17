@@ -42,6 +42,8 @@
                 <form method="POST" action="{{ path('app_delete_reclamation', {'id': reclam.getIdReclamation()}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?');">
                   <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Supprimer</button>
                 </form>
+                <a href="{{ path('PDF_Reclamation', {'id': reclam.getIdReclamation()}) }}" class="btn btn-secondary btn-sm"><i class="fas fa-file-pdf"></i> PDF</a>
+
               </div>
             </td>
           </tr>

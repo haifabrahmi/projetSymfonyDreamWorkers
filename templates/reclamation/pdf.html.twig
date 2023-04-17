@@ -1,0 +1,32 @@
+<h1 class="align-center">Bienvenue dans notre application TuniBus</h1>
+
+<p>Voici la liste de toutes les reclamations :</p>
+
+<table class="table" border="5">
+  <thead>
+    <tr>
+      <th scope="col">Catégorie de la réclamation</th>
+      <th scope="col">Objet de la réclamation</th>
+      <th scope="col">Description de la réclamation</th>
+      <th scope="col">Date de la réclamation</th>
+      <th scope="col">État de la réclamation</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for reclam in reclamation %}
+      <tr>
+        <td>{{ reclam.categorieReclamation }}</td>
+        <td>{{ reclam.objetReclamation }}</td>
+        <td>{{ reclam.descriptionReclamation }}</td>
+        <td>{{ reclam.dateReclamation ? reclam.dateReclamation | date('Y-m-d') : '' }}</td>
+        <td>{{ reclam.etatReclamation }}</td>
+        <td>Action à définir</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="6">Aucune réclamation n'a été trouvée.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
