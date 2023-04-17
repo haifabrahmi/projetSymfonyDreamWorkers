@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Form\UserSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -151,6 +153,54 @@ class UserController extends AbstractController
             'user'=>$user,
         ]);
     }
+
+    /**
+     * @Route("/search", name="search", methods={"POST"})
+     */
+    public function search(Request $request)
+    {
+        $query = $request->request->get('query');
+
+        // Effectuer la recherche dans la source de données (par exemple, une base de données)
+        $users = $this->getDoctrine()->getRepository(User::class)->findByNom($query);
+
+        // Rendre la vue avec les résultats de la recherche
+        return $this->render('templates_Back/user/index.html.twig', ['users' => $users]);
+    }
+
+    /**
+     * @Route("/sort", name="sort_users", methods={"POST"})
+     */
+    public function sort(Request $request)
+    {
+        $sortField = $request->request->get('sortField');
+
+        // Récupérer les utilisateurs depuis la source de données (par exemple, une base de données)
+        $users = $this->getDoctrine()->getRepository(User::class)->findBy([], [$sortField => 'ASC']);
+
+        // Rendre la vue avec les utilisateurs triés
+        return $this->render('templates_Back/user/index.html.twig', ['users' => $users]);
+    }
+
+ /*   #[Route('/user/search', name: 'user_search', methods: ['POST'])]
+public function searchUsers(Request $request, UserRepository $userRepository): Response
+{
+    $form = $this->createForm(UserSearchType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $criteria = $form->getData();
+        $users = $userRepository->searchUsers($criteria); // Remplacer searchUsers par la méthode de recherche dans votre UserRepository
+    } else {
+        $users = $userRepository->findAll(); // Remplacer findAll par la méthode de récupération de la liste complète des utilisateurs dans votre UserRepository
+    }
+
+    return $this->render('index.html.twig', [
+        'form' => $form->createView(),
+        'users' => $users,
+    ]);
+}
+*/
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository): Response

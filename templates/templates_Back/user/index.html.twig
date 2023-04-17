@@ -18,11 +18,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="../../css/style.css" rel="stylesheet">
+
+    <style>
+        .nav-header img {
+            width: 50%; /* Remplacez cette valeur par la largeur souhaitée */
+            height: 2auto; /* Utilisez "auto" pour conserver le rapport hauteur/largeur de l'image */
+        }
+    </style>
 
 </head>
 
@@ -52,11 +59,12 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="../../images/logo.png" alt="">
-                <img class="logo-compact" src="../../images/logo-text.png" alt="">
-                <img class="brand-title" src="../../images/logo-text.png" alt="">
-            </a>
+        <a href="index.html" class="brand-logo">
+            <img class="logo-abbr" style=" width:100%" src="../../images/tunibusLogo.png" alt="">
+            <img class="logo-compact" src="../../images/TUNIBUS.png" alt="">
+            <img class="brand-title" src="../../images/TUNIBUS.png" alt="">
+        </a>
+    
 
             <div class="nav-control">
                 <div class="hamburger">
@@ -89,9 +97,15 @@
                         </div>
 
                         <ul class="navbar-nav header-right">
-                         <div  class="welcome-text">
-                            <h4 style="color: #593bdb;margin-top:30px;">{{user.nom}} </h4>
+                        <div class="welcome-text">
+    <td>
+      {% if user is defined and user.nom is defined %}
+        <h4 style="color: #593bdb;margin-top:30px;"> {{user.nom}} </h4>
+      {% endif %}
+    </td>
                         </div>
+                        </ul>
+
                          
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
@@ -208,20 +222,7 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>Tableau de personnes: </h4>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Bootstrap</a></li>
-                        </ol>
-                    </div>
-                </div>
+            
                 <!-- row -->
 
                 <div class="row">
@@ -235,7 +236,36 @@
                                 <h4 class="card-title">Table d'utilisateur</h4>
                                 <button type="button"  onclick="window.location.href='{{ path('app_user_new') }}'" class="btn btn-primary" >+</button>
                             </div>
-                            
+
+
+    <form action="{{ path('search') }}" method="POST"> 
+        <div class="col-lg-12" class="dropdown-menu p-0 m-0">
+                        <div class="card">
+                            <div class="card-header">
+                                <form>
+                                <input class="form-control" type="text" name="query" placeholder="Rechercher un utilisateur"aria-label="Search">
+                                </form>
+                                <button type="submit"  class="btn btn-primary" >Rechercher</button>
+        </div>
+    </form>
+    <form action="{{ path('sort_users') }}" method="POST"> 
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <select name="sortField" class="form-control"> <!-- Ajouter la classe form-control pour styliser le champ -->
+                    <option value="nom">Nom</option>
+                    <option value="role">Role</option>
+                    <!-- Ajouter d'autres options de tri ici -->
+                </select>
+                <button type="submit" class="btn btn-primary">Trier</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+                            {% if users is not empty %}
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered verticle-middle table-responsive-sm">
@@ -249,30 +279,32 @@
                 <th>actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                        {% for user in users %}
-                                            <tr>
-                                                <td>{{user.nom}}</td>
-                                                <td>{{user.prenom}}</td>
-                                                <td>{{user.email}}</td>
-                                                <td>{{user.number}}</td>
-                                                <td>{{user.role}}</td>
-                                                <td>
-                                                    <span>
-                                                        <a href="{{ path('app_user_edit', {'iduser': user.iduser}) }}" class="mr-4" data-toggle="tooltip"
-                                                            data-placement="top" title="Edit"><i
-                                                                class="fa fa-pencil color-muted"></i> </a>
-                                                                {{ include('templates_Back/user/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}   
-                                                        
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                             {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-                                        </tbody>
+                                        
+    
+    
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.number }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <span>
+                                <a href="{{ path('app_user_edit', {'iduser': user.iduser}) }}" class="mr-4" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted"></i> </a>
+                                {{ include('templates_Back/user/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}   
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun utilisateur trouvé.</p>
+    {% endif %}
+</tbody>
+
                                     </table>
                                 </div>
                             </div>
@@ -296,7 +328,6 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
             </div>
         </div>
         <!--**********************************

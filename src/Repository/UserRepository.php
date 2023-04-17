@@ -66,6 +66,15 @@ class UserRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findByNom($query)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.nom LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
     
     
 
