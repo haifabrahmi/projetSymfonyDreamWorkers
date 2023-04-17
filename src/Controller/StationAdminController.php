@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Station;
+use App\Entity\Circuit;
 use App\Form\StationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,18 +11,56 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+
 #[Route('/admin/station')]
 class StationAdminController extends AbstractController
 {
     #[Route('/', name: 'admin_station_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $pieChart = new PieChart();
+
         $stations = $entityManager
             ->getRepository(Station::class)
             ->findAll();
 
+        $circuits = $entityManager
+            ->getRepository(Circuit::class)
+            ->findAll();
+
+        $charts = [['Station', 'Number per Circuit']];
+
+        foreach ($circuits as $c) {
+            $circuitN = 0;
+            foreach ($stations as $s) {
+                if ($c == $s->getIdC()) {
+                    $circuitN++;
+                }
+            }
+
+            array_push($charts, [$c->getNomC(), $circuitN]);
+        }
+        
+        $pieChart->getData()->setArrayToDataTable($charts);
+
+        // dd($pieChart);
+
+        $pieChart->getOptions()->setTitle('Stations Number per Circuits');
+        $pieChart->getOptions()->setHeight(400);
+        $pieChart->getOptions()->setWidth(400);
+        $pieChart
+            ->getOptions()
+            ->getTitleTextStyle()
+            ->setColor('#07600');
+        $pieChart
+            ->getOptions()
+            ->getTitleTextStyle()
+            ->setFontSize(25);
+
         return $this->render('stationAdmin/index.html.twig', [
             'stations' => $stations,
+            'piechart' => $pieChart,
         ]);
     }
 

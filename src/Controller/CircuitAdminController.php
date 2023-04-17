@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Circuit;
 use App\Form\CircuitType;
+use App\Repository\CircuitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,15 +14,76 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/circuit')]
 class CircuitAdminController extends AbstractController
 {
-    #[Route('/', name: 'admin_circuit_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/sortByAscDate', name: 'sort_by_asc_date')]
+    public function sortAscDate(EntityManagerInterface $entityManager, CircuitRepository $circuitRepository, Request $request)
     {
         $circuits = $entityManager
             ->getRepository(Circuit::class)
             ->findAll();
 
+        $query = $request->query->get('q');
+        $circuits = $this->getDoctrine()
+            ->getRepository(Circuit::class)
+            ->searchCircuit($query);
+
+        $circuits = $circuitRepository->sortByAscDate();
+    
+        return $this->render("circuitAdmin/index.html.twig",[
+            'circuits' => $circuits,
+            'query' => $query,
+        ]);
+    }
+    
+    #[Route('/sortByDescDate', name: 'sort_by_desc_date')]
+    public function sortDescDate(EntityManagerInterface $entityManager, CircuitRepository $circuitRepository, Request $request)
+    {
+        $circuits = $entityManager
+            ->getRepository(Circuit::class)
+            ->findAll();
+
+        $query = $request->query->get('q');
+        $circuits = $this->getDoctrine()
+            ->getRepository(Circuit::class)
+            ->searchCircuit($query);
+
+        $circuits = $circuitRepository->sortByDescDate();
+    
+        return $this->render("circuitAdmin/index.html.twig",[
+            'circuits' => $circuits,
+            'query' => $query,
+        ]);
+    }
+
+    #[Route("/search", name:"circuit_search")]
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('q');
+        $circuit = $this->getDoctrine()
+            ->getRepository(Circuit::class)
+            ->searchCircuit($query);
+
+        return $this->render('circuitAdmin/search.html.twig', [
+            'circuits' => $circuit,
+            'query' => $query,
+        ]);
+    }
+
+    #[Route('/', name: 'admin_circuit_index', methods: ['GET'])]
+    public function index(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $circuits = $entityManager
+            ->getRepository(Circuit::class)
+            ->findAll();
+
+        $query = $request->query->get('q');
+        $circuit = $this->getDoctrine()
+            ->getRepository(Circuit::class)
+            ->searchCircuit($query);
+
         return $this->render('circuitAdmin/index.html.twig', [
             'circuits' => $circuits,
+            'query' => $query,
+            'circuit' => $circuit,
         ]);
     }
 

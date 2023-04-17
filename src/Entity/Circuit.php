@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Circuit
  *
  * @ORM\Table(name="circuit")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CircuitRepository")
  */
 class Circuit
 {

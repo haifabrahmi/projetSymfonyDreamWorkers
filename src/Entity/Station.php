@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Station
  *
  * @ORM\Table(name="station")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\StationRepository")
  */
 class Station
 {
@@ -27,6 +27,7 @@ class Station
      * @var string
      *
      * @ORM\Column(name="nom_s", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $nomS;
 
@@ -34,6 +35,7 @@ class Station
      * @var string
      *
      * @ORM\Column(name="adresse_s", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $adresseS;
 
@@ -41,6 +43,7 @@ class Station
      * @var string
      *
      * @ORM\Column(name="ligne_s", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $ligneS;
 
@@ -48,6 +51,7 @@ class Station
      * @var \DateTime
      *
      * @ORM\Column(name="horaire_s", type="date", nullable=false)
+     * @Assert\NotBlank()
      */
     private $horaireS;
 
@@ -55,6 +59,7 @@ class Station
      * @var string
      *
      * @ORM\Column(name="equipement_s", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $equipementS;
 
@@ -62,6 +67,7 @@ class Station
      * @var string
      *
      * @ORM\Column(name="commentaire_s", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $commentaireS;
 
@@ -72,6 +78,7 @@ class Station
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idC", referencedColumnName="id_c")
      * })
+     * @Assert\NotBlank()
      */
     private $idC;
 
