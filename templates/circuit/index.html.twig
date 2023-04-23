@@ -1,0 +1,38 @@
+{% extends 'basepage.html.twig' %}
+
+{% block title %}Circuits{% endblock %}
+
+{% block display %}Circuits{% endblock %}
+
+{% block breadcrumb %}Circuits{% endblock %}
+
+{% block content %}
+    <h1>Circuits</h1>
+	{{ knp_pagination_render(circuits) }}
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-0 feature-row">
+        {% for circuit in circuits %}
+        
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="feature-item border h-100 p-5">
+                        <div style="margin: auto; padding: 40px;" class="btn-square bg-light rounded-circle mb-4" style="width: 64px; height: 64px;">
+                    <a href="{{ path('app_circuit_show', {'idC': circuit.idC}) }}">show</a>
+                        </div>
+                        <h5 class="mb-3">{{ circuit.nomC }}</h5>
+                        <p class="mb-0">Liste: {{ circuit.listeC }}</p>
+                <p>Nombre Bus: {{ circuit.nbrbusC }}</p>
+                <p>Horaire: {{ circuit.horaireC ? circuit.horaireC|date('Y-m-d') : '' }}</p>
+                <p>Distance: {{ circuit.distanceC }}</p>
+                    </div>
+                </div>
+        {% else %}
+        
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">no records found
+                </div>
+        {% endfor %}
+        </div>
+        </div>
+        </div>
+	{{ knp_pagination_render(circuits) }}
+{% endblock %}

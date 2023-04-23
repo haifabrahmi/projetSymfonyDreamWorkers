@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stations{% endblock %}
+
+{% block body %}
+
+  <div id="div_chart"></div>
+
+  <script
+    type="text/javascript"
+    src="https://www.gstatic.com/charts/loader.js"
+  ></script>
+  <script type="text/javascript">
+    {{gc_draw(piechart, "div_chart")}}
+  </script>
+
+    <h1>Stations</h1>
+
+	{% for message in app.flashes('notice') %}
+		<div class="alert alert-success ">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	{{ knp_pagination_render(stations) }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Station</th>
+                <th>NomS</th>
+                <th>AdresseS</th>
+                <th>LigneS</th>
+                <th>HoraireS</th>
+                <th>EquipementS</th>
+                <th>CommentaireS</th>
+                <th>Circuit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>
+                    <img style="height: 100px; object-fit: cover;" class="img-fluid" src="{{ asset('/uploads/' ~ station.image) }}" alt="">
+                </td>
+                <td>{{ station.nomS }}</td>
+                <td>{{ station.adresseS }}</td>
+                <td>{{ station.ligneS }}</td>
+                <td>{{ station.horaireS ? station.horaireS|date('Y-m-d') : '' }}</td>
+                <td>{{ station.equipementS }}</td>
+                <td>{{ station.commentaireS }}</td>
+                <td>{{ station.idC }}</td>
+                <td>
+                    <a href="{{ path('admin_station_show', {'idS': station.idS}) }}">show</a>
+                    <a href="{{ path('admin_station_edit', {'idS': station.idS}) }}">edit</a>
+
+    {{ include('stationAdmin/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	{{ knp_pagination_render(stations) }}
+
+    <a href="{{ path('admin_station_new') }}">Create new</a>
+{% endblock %}

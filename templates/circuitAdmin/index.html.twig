@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Circuits
+{% endblock %}
+
+{% block body %}
+	<h1>Circuits</h1>
+
+	{% for message in app.flashes('notice') %}
+		<div class="alert alert-success ">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	{{ knp_pagination_render(circuits) }}
+
+	<form id="search-form" action="{{ path('circuit_search') }}" method="get">
+		<div class="form-group">
+			<input type="text" name="q" class="form-control" value="{{ query }}">
+		</div>
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+
+	<hr>
+
+	<a class="btn btn-primary" href="{{path('sort_by_asc_date')}}">HoraireC Asc</a>
+	<a class="btn btn-primary" href="{{path('sort_by_desc_date')}}">HoraireC Desc</a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>NomC</th>
+				<th>ListeC</th>
+				<th>NbrbusC</th>
+				<th>HoraireC</th>
+				<th>DistanceC</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody id="search-results">
+			{% for circuit in circuits %}
+				<tr>
+					<td>{{ circuit.nomC }}</td>
+					<td>{{ circuit.listeC }}</td>
+					<td>{{ circuit.nbrbusC }}</td>
+					<td>{{ circuit.horaireC ? circuit.horaireC|date('Y-m-d') : '' }}</td>
+					<td>{{ circuit.distanceC }}</td>
+					<td>
+						<a href="{{ path('admin_circuit_show', {'idC': circuit.idC}) }}">show</a>
+						<a href="{{ path('admin_circuit_edit', {'idC': circuit.idC}) }}">edit</a>
+
+						{{ include('circuitAdmin/_delete_form.html.twig') }}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tbody id="search"></tbody>
+	</table>
+
+	{{ knp_pagination_render(circuits) }}
+
+	<a href="{{ path('admin_circuit_new') }}">Create new</a>
+
+	<script>
+		$(function () {
+$('#search-form').submit(function (e) {
+e.preventDefault();
+
+$.ajax({
+url: $(this).attr('action'),
+data: $(this).serialize(),
+success: function (data) {
+$('#search-results').html(data);
+}
+});
+});
+});
+	</script>
+{% endblock %}

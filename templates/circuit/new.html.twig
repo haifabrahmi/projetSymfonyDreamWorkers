@@ -1,0 +1,15 @@
+{% extends 'basepage.html.twig' %}
+
+{% block title %}Circuits{% endblock %}
+
+{% block display %}Circuits{% endblock %}
+
+{% block breadcrumb %}Circuits{% endblock %}
+
+{% block content %}
+    <h1>Create new Circuit</h1>
+
+    {{ include('circuit/_form.html.twig') }}
+
+    <a href="{{ path('app_circuit_index') }}">back to list</a>
+{% endblock %}
