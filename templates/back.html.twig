@@ -6,12 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>TuniBus </title>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="{{asset('vendor/owl-carousel/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/owl-carousel/css/owl.theme.default.min.css')}}">
     <link href="{{asset('vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+     <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
 
 
 
@@ -62,7 +66,7 @@
         <!--**********************************
             Header start
         ***********************************-->
-        <div class="header">
+        {# <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
@@ -71,7 +75,7 @@
                                 <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
                                     <i class="mdi mdi-magnify"></i>
                                 </span> #}
-                                <div class="dropdown-menu p-0 m-0">
+                                {# <div class="dropdown-menu p-0 m-0">
                                     <form>
                                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                                     </form>
@@ -163,7 +167,7 @@
                     </div>
                 </nav>
             </div>
-        </div>
+        </div> #}
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -260,9 +264,11 @@
     <script src="{{asset('vendor/jqvmap/js/jquery.vmap.usa.js')}}"></script>
     <script src="{{asset('vendor/jquery.counterup/jquery.counterup.min.js')}}"></script>
 
-
+    <script src="//code.jquery.com/jquery.js"></script>
     <script src="{{asset('js/dashboard/dashboard-1.js')}}"></script>
-
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+      
+  {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 </body>
 
 </html>

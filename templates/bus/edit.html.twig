@@ -3,6 +3,10 @@
 {% extends 'back.html.twig' %}
 
 {% block title %}Bus index{% endblock %}
+{% block content %}
+<!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    {% endblock %}
 
 {% block body %}
    
@@ -49,6 +53,14 @@
         </div>
     </div>
 
+{% block javascripts %}
+     <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    {% endblock %}
 
 {% endblock %}
 

@@ -47,6 +47,44 @@ class BusRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
 }
+public function findByModeleDesc($modele)
+{
+    return $this->createQueryBuilder('b')
+        ->andWhere('b.modele LIKE :modele')
+        ->setParameter('modele', '%' . $modele . '%')
+        ->orderBy('b.modele', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+public function findAverageRatingForBus(Bus $bus): float
+{
+    $qb = $this->createQueryBuilder('b')
+        ->select('AVG(r.rating) as avg_rating')
+        ->leftJoin('b.ratings', 'r')
+        ->where('b = :bus')
+        ->setParameter('bus', $bus)
+        ->getQuery();
+
+    return (float) $qb->getSingleScalarResult();
+}
+public function busStatisticsByModel(string $model): array
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $query = $entityManager->createQuery(
+        'SELECT COUNT(b.id_bus) as totalBuses, AVG(b.capacite) as averageCapacity, MIN(b.date_depart) as firstDeparture, MAX(b.date_arrivee) as lastArrival
+        FROM App\Entity\Bus b
+        WHERE b.modele = :model'
+    )->setParameter('model', $model);
+
+    $result = $query->getResult()[0];
+
+    return [
+        'totalBuses' => $result['totalBuses'],
+        'averageCapacity' => $result['averageCapacity'],
+        'firstDeparture' => $result['firstDeparture'],
+        'lastArrival' => $result['lastArrival']
+    ];
+}
 
     
 

@@ -2,34 +2,54 @@
 {% extends 'back.html.twig' %}
 
 {% block title %}Bus index{% endblock %}
+{% block content %}
+<!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    {% endblock %}
 {% block body %}
+<a href="{{ path('app_sort_bus', {'field': 'modele', 'order': 'desc'}) }}" class="btn btn-danger btn-sm mx-auto">Trier par modèle (descendant)</a>
+  <a href="{{ path('app_sort_bus', {'field': 'modele', 'order': 'asc'}) }}" class="btn btn-primary btn-sm">Trier par modèle (ascendant)</a>
+
+<div class="search_bar dropdown">
+  <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+    <i class="mdi mdi-magnify"></i>
+  </span> 
+  <div class="dropdown-menu p-0 m-0">
+    <form action="{{ path('app_list_bus') }}" method="GET">
+      <input class="form-control" type="search" name="modele" placeholder="Recherche par modèle" aria-label="Recherche par modèle" value="{{ searchQuery }}">
+      <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+  </div>
+</div>
 
 
-<div class="header">
+
+{# <div class="header">
   <div class="header-content">
-    <nav class="navbar navbar-expand">
+    <nav class="navbar navbar-expand"> 
       <div class="collapse navbar-collapse justify-content-between">
         <div class="header-left">
           <div class="search_bar dropdown">
             <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
               <i class="mdi mdi-magnify"></i>
-            </span>
+            </span> 
             <div class="dropdown-menu p-0 m-0">
               <form action="{{ path('app_list_bus') }}" method="GET">
                 <input class="form-control" type="search" name="modele" placeholder="Recherche par modèle" aria-label="Recherche par modèle" value="{{ searchQuery }}">
                 <button type="submit" class="btn btn-primary">Rechercher</button>
               </form>
+             
             </div>
           </div>
         </div>
-        <div class="header-right">
+         <div class="header-right">
           <!-- autres éléments de la barre de navigation ici -->
-        </div>
+        </div> 
       </div>
     </nav>
   </div>
-</div>
-
+</div>  
+ #}
 
 
 
@@ -64,16 +84,28 @@
       <td>{{ bus.image}}</td>
       <td>
         <div class="btn-group" role="group">
-        
+       
+
           <a href="{{ path('app_edit_bus', {'id': bus.id_bus}) }}" class="btn btn-primary btn-sm">Modifier</a>
+             
           <form action="{{ path('app_delete_bus', {'id': bus.id_bus}) }}" method="post" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE" />
             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')">Supprimer</button>
+             
           </form> 
         </div>
       </td>
     </tr>
     {% endfor %}
+    {% block javascripts %}
+     <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    {% endblock %}
+
   </tbody>
 </table>
 {% endblock %}

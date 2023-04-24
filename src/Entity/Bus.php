@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use \EasyCorp\Bundle\EasyRatingBundle\Model\RateableTrait;
+use EasyCorp\Bundle\EasyRatingBundle\Model\RaterInterface;
+use EasyCorp\Bundle\EasyRatingBundle\Model\Rate;
 
 #[ORM\Entity(repositoryClass: BusRepository::class)]
 class Bus
@@ -38,6 +41,22 @@ class Bus
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rating;
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+   
+
+    // ...
+
+    
     #[ORM\OneToMany(mappedBy: "bus", targetEntity: Maintenance::class)]
     private $maintenances;
 
@@ -45,6 +64,7 @@ class Bus
     {
         $this->maintenances = new ArrayCollection();
     }
+
 
     public function addMaintenance(Maintenance $maintenance): self
     {

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des maintenances</title>
+</head>
+<body>
+    <h1>Liste des maintenances</h1>
+    {% if maintenances|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date entretien</th>
+                    <th>Description</th>
+                    <th>Bus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for maintenance in maintenances %}
+                    <tr>
+                        <td>{{ maintenance.id_m }}</td>
+                        <td>{{ maintenance.date_entretien|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ maintenance.description }}</td>
+                        <td>{{ maintenance.bus.id_bus }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune maintenance trouvée.</p>
+    {% endif %}
+</body>
+</html>
