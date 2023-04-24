@@ -1,0 +1,84 @@
+{% extends 'front.html.twig' %}
+{% block body %}
+  <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <!-- Blog Detail Start -->
+                <div class="pb-3">
+                    <div class="position-relative">
+                                             {% if publication.image %}
+
+                                                        <img class="img-fluid w-100" src="{{ asset('photos/' ~ publication.image) }}" alt="{{ publication.titre }}">
+                                                        {% endif %}
+                        <div class="position-absolute bg-primary d-flex flex-column align-items-center justify-content-center rounded-circle"
+                            style="width: 60px; height: 60px; bottom: -30px; right: 30px;">
+                            <h4 class="font-weight-bold mb-n1">{{ publication.datePub ? publication.datePub|date('d') : '' }}</h4>
+                            <small class="text-white text-uppercase">{{ publication.datePub ? publication.datePub|date('M') : '' }}</small>
+                        </div>
+                    </div>
+                    <div class="bg-light
+ mb-3" style="padding: 30px;">
+                       
+                        <h4 class="font-weight-bold mb-3">{{ publication.titre }}</h4>
+                        <p class="text-dark">{{publication.texte|striptags}}</p>
+                        {% if like %}
+                             <a  href="{{ path('dislike_publication', {'idPub': publication.idPub}) }}">{{publication.nbReaction}}<i class="fa fa-heart"></i></a>
+
+                    {% else %}
+                                                 <a  href="{{ path('like_publication', {'idPub': publication.idPub}) }}">{{publication.nbReaction}}<i class="far fa-heart"></i></a>
+
+                    {% endif  %}
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}&amp;quote=Check+out+this+awesome+post" target="_blank"><i class="bi bi-facebook"></i></a>
+                  
+      <a href="https://twitter.com/intent/tweet?url={{ app.request.uri }}&amp;text=Check+out+this+awesome+post" target="_blank">
+        <i class="bi bi-twitter"></i>
+      </a>
+                    </div>
+                    
+                </div>
+                <!-- Blog Detail End -->
+
+                <!-- Comment List Start -->
+                <div class="bg-light" style="padding: 30px; margin-bottom: 30px;">
+                    <h3 class="mb-4"> {{publication.commentaires|length}}  Commentaires</h3>
+                      {% for commentaire in publication.commentaires %}
+                    <div class="media mb-4">
+                        <div class="media-body">
+                            <h6><a href="">baha</a> <small><i>{{ commentaire.dateCom ? commentaire.dateCom|date('d M Y') : '' }}</i></small></h6>
+                            <p style="color:black">{{commentaire.sujCom}}</p>
+                        </div>
+                    </div>
+                      {% endfor %}
+                   
+                </div>
+                <!-- Comment List End -->
+
+                <!-- Comment Form Start -->
+                <div class=" mb-3" style="padding: 30px;">
+                   
+                </div>
+                <!-- Comment Form End -->
+            </div>
+
+            <!-- Sidebar Start -->
+            <div class="col-lg-5 mt-5 mt-lg-0">
+               
+                <div class="bg-light mb-3">
+                     <h3 class="mb-4">Leave a comment</h3>
+                        {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                        {{ include('commentaire/_form.html.twig') }}
+
+                </div>
+               
+            </div>
+            
+            <!-- Sidebar End -->
+        </div>
+    </div>
+{% endblock %}

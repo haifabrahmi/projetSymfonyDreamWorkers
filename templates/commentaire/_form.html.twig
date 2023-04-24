@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+<div class="form-group">
+  <label for="exampleInputUsername2" class="col-sm-2 form-check-label">{{ form_label(form.sujCom) }}</label>
+ 
+    {{ form_widget(form.sujCom, {'attr': {'class': 'form-control border-0'}}) }}
+                        {{form_errors(form.sujCom)}}
+
+    </div>    <button class="btn btn-primary font-weight-semi-bold py-2 px-3">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

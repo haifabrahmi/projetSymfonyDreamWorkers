@@ -1,0 +1,157 @@
+{% extends 'front.html.twig' %}
+{% block body %}
+<div class="container py-5">
+        <div class="row">
+          <!-- Blog Grid Start -->
+            <div class="col-lg-8">
+                <div class="row">
+                 {% for publication in publications %}
+                   <div class="col-md-12 mb-3">
+                        <div class="position-relative">
+                        
+                         {% if publication.image %}
+                         {% if publication.image ends with '.mp4' %}
+        <video src="{{ asset('photos/' ~ publication.image) }}" class="img-fluid w-100 h-20" controls>
+    </video>
+{% else %}
+    <img src="{{ asset('photos/' ~ publication.image) }}" class="img-fluid w-100 h-20" alt="{{ publication.titre }}">
+{% endif %}
+                                  
+                        {% endif %}
+                            <div class="position-absolute bg-primary d-flex flex-column align-items-center justify-content-center rounded-circle"
+                                style="width: 60px; height: 60px; bottom: -30px; right: 30px;">
+                            <h4 class="font-weight-bold mb-n1">{{ publication.datePub ? publication.datePub|date('d') : '' }}</h4>
+                                <small class="text-white text-uppercase">{{ publication.datePub ? publication.datePub|date('M') : '' }}</small>
+                            </div>
+                        </div>
+                      
+                        <div class="bg-light mb-3" style="padding: 30px;">
+                                                        <h4 class="font-weight-bold mb-3">{{publication.titre}}</h4>
+                            <p>{{publication.texte|striptags}}</p>
+                            <a class="border-bottom border-primary text-uppercase text-decoration-none" href="{{ path('app_publication_showFront', {'idPub': publication.idPub}) }}">Read More <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>       
+                      {% endfor %}
+                </div>
+            </div>
+            
+
+
+                   <div class="col-lg-4 mt-5 mt-lg-0">
+                <!-- Search Form Start -->
+                <div class="mb-5">
+                    <div class="bg-light" style="padding: 30px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-0 " placeholder="recherche" id="search">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-primary border-primary text-white p-2"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+              <script type="text/javascript">
+                jQuery(document).ready(function() {
+                var searchRequest = null;
+                $("#search").keyup(function() {
+                    var minlength = 1;
+                    var that = this;
+                    var value = $(this).val();
+                    var entitySelector = $("#entitiesNav").html('');
+                    var postContainer = $('#recent-posts').html('');
+                    var searchTitle = $('#search-title').html('Search results for: ' + value);
+                    console.log("aaa",postContainer);
+
+                    if (value.length >= minlength ) {
+                        if (searchRequest != null)
+                            searchRequest.abort();
+                            searchRequest = $.ajax({
+                            type: "GET",
+                            url: "{{ path('ajax_search_publication') }}",
+                            data: {
+                                'q' : value
+                            },
+                            dataType: "text",
+                            success: function(msg){
+                              
+                                //we need to check if the value is the same
+                                console.log("res",value)
+                                if (value==$(that).val()) {
+                                    var result = JSON.parse(msg);
+                                    console.log(result)
+                                    $.each(result, function(key, arr) {
+                                      $.each(arr, function(idPub, value) {
+                                          if (key == 'publications') { // assuming the posts are in a property called 'posts'
+                                              if (idPub != 'error') {
+                                                  // create the post item and append it to the container
+                                                  console.log(value);
+                                                  var postItem = $('<div class="d-flex mb-3">').appendTo(postContainer);
+$('<img>').attr('src', '{{ asset('photos/') }}' + value.image).appendTo(postItem);
+
+                                                $('<h6>').html('<a href="/publication/show/'+idPub+'">'+value.titre+'</a>').appendTo(postItem);
+                                                  $('<time>').attr('datetime', value.date.date).text(value.date.date).appendTo(postItem);                                                  
+                                              } else {
+                                                  postContainer.append('<li class="errorLi">'+value+'</li>');
+                                              }
+                                          }
+                                      });
+                                  });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+
+              </script>
+
+<h3 class="mb-4 search-title">Recent Post</h3>
+                <div class="mb-5 recent-posts" id="recent-posts">
+                    <div class="d-flex mb-3">
+                        <img class="img-fluid" src="{{ asset('/front/img/about-2.jpg') }}"  style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                         <h6><a href="blog-single.html" class="d-flex align-items-center bg-light text-dark text-decoration-none px-3" style="height: 80px;">Quidem autem et impedit</a></h6>
+                        </br>  <time datetime="2020-01-01">Jan 1, 2020</time>
+                    </div>
+                    <div class="d-flex mb-3">
+                         <img class="img-fluid" src="{{ asset('/front/img/about-2.jpg') }}"  style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                         <h6><a href="blog-single.html" class="d-flex align-items-center bg-light text-dark text-decoration-none px-3"style="height: 80px;">Quidem autem et impedit</a></h6>
+                 <br> <time datetime="2020-01-01">Jan 1, 2020</time>
+                    </div>
+                    <div class="d-flex mb-3">
+                       <img class="img-fluid" src="{{ asset('front/img/about-2.jpg') }}" style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                         <h6><a href="blog-single.html" class="d-flex align-items-center bg-light text-dark text-decoration-none px-3"style="height: 80px;">Quidem autem et impedit</a></h6>
+                 <br> <time datetime="2020-01-01">Jan 1, 2020</time>
+                    </div>
+                    <div class="d-flex mb-3">
+                         <img  class="img-fluid" src="{{ asset('/front/img/about-2.jpg') }}"  style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                         <h6><a href="blog-single.html" class="d-flex align-items-center bg-light text-dark text-decoration-none px-3"style="height: 80px;">Quidem autem et impedit</a></h6>
+                 <br> <time datetime="2020-01-01">Jan 1, 2020</time>
+                    </div>
+                    <div class="d-flex mb-3">
+                         <img class="img-fluid" src="{{ asset('/front/img/about-2.jpg') }}"  style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                         <h6><a href="blog-single.html" class="d-flex align-items-center bg-light text-dark text-decoration-none px-3"style="height: 80px;">Quidem autem et impedit</a></h6>
+                  <br><time datetime="2020-01-01">Jan 1, 2020</time>
+                    </div>
+                </div>
+               
+                
+               
+            
+
+ </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+        
+{% endblock %}

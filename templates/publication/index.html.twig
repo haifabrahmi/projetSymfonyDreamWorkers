@@ -1,0 +1,39 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Publication index{% endblock %}
+
+{% block body %}
+    <h1>Nos Publications</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                    <th>titre</th>
+                <th>Contenu de la publication</th>
+                <th>Likes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            <tr>
+                 <td>{{ publication.datePub ? publication.datePub|date('Y-m-d') : ''}}</td> 
+                  <td>{{ publication.titre }}</td> 
+                 <td>{{ publication.texte|striptags }}</td> 
+                 <td>{{ publication.nbReaction }}</td>
+              
+               
+                <td>
+                    <a href="{{ path('app_publication_show', {'idPub': publication.idPub}) }}">show</a>
+                    <a href="{{ path('app_publication_edit', {'idPub': publication.idPub}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
