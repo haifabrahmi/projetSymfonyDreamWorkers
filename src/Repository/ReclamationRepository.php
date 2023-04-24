@@ -66,5 +66,26 @@ class ReclamationRepository extends ServiceEntityRepository
 
 
 
+public function orderByObjetReclamation(): array
+{
+    return $this->createQueryBuilder('r')
+        ->orderBy('LOWER(r.objet_reclamation)', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+public function searchReclamation($categorieReclamation)
+{
+    $query = $this->createQueryBuilder('r')
+        ->where('r.categorie_reclamation LIKE :categorieReclamation')
+        ->setParameter('categorieReclamation', '%'.$categorieReclamation.'%')
+        ->getQuery();
+
+    return $query->getResult();
+}
+
+
+
+
 
 }

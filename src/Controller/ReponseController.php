@@ -97,5 +97,17 @@ class ReponseController extends AbstractController
             'reponse' => $rep,
         ]);
     }
+    /**
+ * @Route("/orderByDescription", name="orderByDescription",methods={"GET"})
+ */
+public function orderByDesc(Request $request,ReponseRepository $reponseRepository): Response
+{
+    $rep = $reponseRepository->orderByObjetRec();
+
+    return $this->render('reponse/listB.html.twig', [
+        'reponse' => $rep,
+    ]);
+}
+
 
 }

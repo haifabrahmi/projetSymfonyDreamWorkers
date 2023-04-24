@@ -7,6 +7,8 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use BaconQrCode\Encoder\QrCode;
+use BaconQrCode\Renderer\Image\Png;
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -114,6 +116,8 @@ class Reclamation
      */
     private $reponses;
 
+    #[ORM\ManyToOne(inversedBy: 'reclamations')]
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -157,17 +161,17 @@ class Reclamation
 	 * @return DateTimeInterface|null
 	 */
 	public function getDate_reclamation(): ?DateTimeInterface {
-		return $this->date_reclamation;
-	}
+         		return $this->date_reclamation;
+         	}
 	
 	/**
 	 * @param DateTimeInterface|null $date_reclamation 
 	 * @return self
 	 */
 	public function setDate_reclamation(?DateTimeInterface $date_reclamation): self {
-		$this->date_reclamation = $date_reclamation;
-		return $this;
-	}
+         		$this->date_reclamation = $date_reclamation;
+         		return $this;
+         	}
     /**
  * @return DateTimeInterface|null
  */
@@ -186,4 +190,24 @@ public function setDateReclamation(?DateTimeInterface $date_reclamation): self
     return $this;
 }
 
+
+private $signale;
+
+  public function setSignale($value) {
+    $this->signale = $value;
+  }
+
+
+
+
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getSignale() {
+		return $this->signale;
+	}
+    
+   
 }

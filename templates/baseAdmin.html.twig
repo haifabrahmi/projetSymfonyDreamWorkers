@@ -62,22 +62,38 @@
         <!--**********************************
             Header start
         ***********************************-->
-        <div class="header">
-            <div class="header-content">
-                <nav class="navbar navbar-expand">
-                    <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-                            <div class="search_bar dropdown">
-                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-                                    <i class="mdi mdi-magnify"></i>
-                                </span>
-                                <div class="dropdown-menu p-0 m-0">
-                                    <form>
-                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                                    </form>
+       <div class="header">
+    <div class="header-content">
+        <nav class="navbar navbar-expand">
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="header-left">
+                    <div class="search_bar dropdown">
+                        <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                            <i class="mdi mdi-magnify"></i>
+                        </span>
+                        <div class="dropdown-menu p-0 m-0">
+                            <form action="{{ path('search_reclamation') }}" method="GET">
+                               
+                                <div class="form-group">
+                                        <select class="form-control" name="categorie_reclamation">
+                                        <option value="">-- Sélectionner une catégorie --</option>
+                                        <option value="Voyageur">Voyageur</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Chauffeur">chauffeur</option>
+                                        <!-- Ajoutez ici d'autres catégories de réclamation -->
+                                    </select>
                                 </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
 
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
@@ -234,6 +250,12 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
+    <script src="{{ asset('vendor/symfony/ux-chartjs') }}"></script>
+<canvas id="myChart" width="400" height="400"></canvas>
+    <script src="{{ asset('node_modules/chart.js/dist/chart.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+
     <script src="{{asset('back/vendor/global/global.min.js')}}"></script>
     <script src="{{asset('back/js/quixnav-init.js')}}"></script>
     <script src="{{asset('back/js/custom.min.js')}}"></script>

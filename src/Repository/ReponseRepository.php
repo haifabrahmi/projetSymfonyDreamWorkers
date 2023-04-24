@@ -63,4 +63,14 @@ class ReponseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function orderByDesc(): array
+{
+    return $this->createQueryBuilder('r')
+        ->orderBy('r.description_reponse', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
 }

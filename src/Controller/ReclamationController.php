@@ -7,10 +7,15 @@ use App\Entity\Reponse;
 use App\Repository\ReclamationRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\Recipient\AdministratorRecipient;
+use Endroid\QrCode\QrCode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReclamationType;
 use App\Form\ReponseType;
@@ -36,26 +41,42 @@ class ReclamationController extends AbstractController
     ]);
 }
 
+   //Notificatiooos
+   private $notifier;
+   private $flashBag;
+   public function __construct(NotifierInterface $notifier, FlashBagInterface $flashBag)
+    {
+        $this->notifier = $notifier;
+        $this->flashBag = $flashBag;
+    }
+
+
+
 
     #[Route('/reclamation/add',name:'app_list_add')]
     public function new(Request $request) : Response
     {
+       
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
-    
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($reclamation);
             $entityManager->flush();
-    
+
+            // Ajouter la notification flash
+            $this->flashBag->add('success', 'une nouvelle reclamation a été ajoutée.');
+
             return $this->redirectToRoute('app_list_reclamation');
         }
-    
+
         return $this->render('reclamation/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/reclamation/{id}/delete', name: 'app_delete_reclamation')]
     public function delete(EntityManagerInterface $entityManager, int $id): Response
@@ -144,11 +165,10 @@ public function addReponse(Request $request, $id)
 }
 
 
-//Exporter pdf (composer require dompdf/dompdf)
-    /**
-     * @Route("/pdf", name="PDF_Reclamation", methods={"GET"})
-     */
-    public function pdf(ReclamationRepository $reclamationRepository)
+/**
+ * @Route("/reclamation/{id}/pdf", name="PDF_Reclamation", methods={"GET"})
+ */
+public function pdf(Reclamation $reclamation)
 {
     // Configure Dompdf according to your needs
     $pdfOptions = new Options();
@@ -156,15 +176,17 @@ public function addReponse(Request $request, $id)
 
     // Instantiate Dompdf with our options
     $dompdf = new Dompdf();
+    
     // Retrieve the HTML generated in our twig file
     $html = $this->renderView('reclamation/pdf.html.twig', [
-        'reclamation' => $reclamationRepository->findAll(),
+        'reclamation' => $reclamation,
     ]);
 
     // Load HTML to Dompdf
     $dompdf->loadHtml($html);
+    
     // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-    $dompdf->setPaper('A3', 'portrait');
+    $dompdf->setPaper('A4', 'portrait');
 
     // Render the HTML as PDF
     $dompdf->render();
@@ -172,10 +194,73 @@ public function addReponse(Request $request, $id)
     // Output the generated PDF to Browser (inline view)
     $output = $dompdf->output();
     $response = new Response($output);
+    
+    $filename = sprintf('reclamation_%s.pdf', $reclamation->getIdReclamation());
+    // Set the Content-Disposition header to force download of the PDF file
+    $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
     $response->headers->set('Content-Type', 'application/pdf');
 
     return $response;
 }
 
+#[Route('/reclamation/{id}/signal', name: 'app_signal_reclamation')]
+public function signal(Request $request, NotifierInterface $notifier, EntityManagerInterface $entityManager, Reclamation $reclamation): Response
+{
+    $reclamation->setSignale(true);
+
+    $entityManager->flush();
+
+    $entityManager->remove($reclamation);
+    $entityManager->flush();
+
+    $notification = new Notification(
+        'La réclamation ' . $reclamation->getIdReclamation() . ' a été signalée.',
+        ['email']
+    );
+
+    $recipient = new Recipient('nourbrava85@gmail.com');
+    $this->notifier->send($notification, $recipient);
+
+    $this->addFlash('success', 'La réclamation a été signalée avec succès et supprimée.');
+
+    return $this->redirectToRoute('app_list_reclamation1');
+}
+
+/**
+ * @Route("/orderByObjetReclamation", name="orderByObjetReclamation", methods={"GET"})
+ */
+public function orderByObjetReclamation(Request $request, ReclamationRepository $reclamationRepository): Response
+{
+    $reclam = $reclamationRepository->findBy([], ['objet_reclamation' => 'ASC']);
+
+    return $this->render('reclamation/listB.html.twig', [
+        'reclamation' => $reclam,
+    ]);
+}
+/**
+ * @Route("/search_reclamation", name="search_reclamation", methods={"GET"})
+ */
+public function searchReclamation(Request $request, ReclamationRepository $reclamationRepository): Response
+{
+    $categorie_reclamation = $request->query->get('categorie_reclamation');
+    
+    $reclamations = $reclamationRepository->searchReclamation($categorie_reclamation);
+    
+    return $this->render('reclamation/listB.html.twig', [
+        'reclamation' => $reclamations,
+    ]);
+}
+
+
+
+
+
+
 
 }
+
+
+
+ 
+
+

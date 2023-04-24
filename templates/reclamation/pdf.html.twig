@@ -1,32 +1,72 @@
-<h1 class="align-center">Bienvenue dans notre application TuniBus</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Voici votre reclamation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
 
-<p>Voici la liste de toutes les reclamations :</p>
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-<table class="table" border="5">
-  <thead>
-    <tr>
-      <th scope="col">Catégorie de la réclamation</th>
-      <th scope="col">Objet de la réclamation</th>
-      <th scope="col">Description de la réclamation</th>
-      <th scope="col">Date de la réclamation</th>
-      <th scope="col">État de la réclamation</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for reclam in reclamation %}
-      <tr>
-        <td>{{ reclam.categorieReclamation }}</td>
-        <td>{{ reclam.objetReclamation }}</td>
-        <td>{{ reclam.descriptionReclamation }}</td>
-        <td>{{ reclam.dateReclamation ? reclam.dateReclamation | date('Y-m-d') : '' }}</td>
-        <td>{{ reclam.etatReclamation }}</td>
-        <td>Action à définir</td>
-      </tr>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-result {
+            font-style: italic;
+            color: #999;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste de réclamations</h1>
+
+    {% if reclamation %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Catégorie de la réclamation</th>
+                    <th>Objet de la réclamation</th>
+                    <th>Description de la réclamation</th>
+                    <th>Date de la réclamation</th>
+                    <th>État de la réclamation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ reclamation.categorieReclamation }}</td>
+                    <td>{{ reclamation.objetReclamation }}</td>
+                    <td>{{ reclamation.descriptionReclamation }}</td>
+                    <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation | date('Y-m-d') : '' }}</td>
+                    <td>{{ reclamation.etatReclamation }}</td>
+                </tr>
+            </tbody>
+        </table>
     {% else %}
-      <tr>
-        <td colspan="6">Aucune réclamation n'a été trouvée.</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        <p class="no-result">Aucune réclamation n'a été trouvée.</p>
+    {% endif %}
+</body>
+</html>

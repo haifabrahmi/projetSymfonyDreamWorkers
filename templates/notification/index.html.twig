@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Notifications</h4>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-menu dropdown-menu-right notification-dropdown">
+                            <div class="notification-list">
+                                <div class="notification-title">New Notifications ({{ count }})</div>
+                                <ul class="list-unstyled">
+                                    {% for notification in notifications %}
+                                        <li class="media dropdown-item border-bottom mb-2 pb-2">
+                                            {% if notification.getType() == 'user_added' %}
+                                                <span class="badge badge-success"><i class="ti-user"></i></span>
+                                            {% elseif notification.getType() == 'product_purchased' %}
+                                                <span class="badge badge-primary"><i class="ti-shopping-cart"></i></span>
+                                            {% elseif notification.getType() == 'ticket_unsolved' %}
+                                                <span class="badge badge-danger"><i class="ti-bookmark"></i></span>
+                                            {% elseif notification.getType() == 'product_purchased' %}
+                                                <span class="badge badge-primary"><i class="ti-heart"></i></span>
+                                            {% elseif notification.getType() == 'customer_added' %}
+                                                <span class="badge badge-success"><i class="ti-image"></i></span>
+                                            {% endif %}
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p class="mb-1"><strong>{{ notification.getMessage() }}</strong></p>
+                                                </a>
+                                                <p class="mb-0 text-muted small"><i class="ti-time"></i> {{ notification.getCreatedAt()|date('H:i') }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <a class="btn btn-primary btn-block" href="#">See all notifications <i class="ti-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
