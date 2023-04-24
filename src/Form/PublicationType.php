@@ -23,7 +23,7 @@ class PublicationType extends AbstractType
                     'style' => 'display: block;color: #3d4465; ',
                 ],
                
-            
+
                  'attr' => [ 'rows' => 5,
                 'cols' => 50,
                 ],])
