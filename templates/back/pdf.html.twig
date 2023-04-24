@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation PDF</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: #FFC41A;
+        }
+        p {
+            text-align: center;
+            color: black;
+        }
+        .price {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #FFC41A;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bon Voyage</h1>
+
+    <p>Date de réservation: {{ reservation.getDateRes()|date('m/d/Y') }}</p>
+    <p>Heure de réservation: {{ reservation.getHeureRes() }}</p>
+    <p>Nombre de places réservées: {{ reservation.getNbPlace() }}</p>
+    <p>Type de ticket: {{ reservation.getTypeTicket() }}</p>
+
+    <div class="price">{{ reservation.getPrixTotale() }} DT</div>
+    <img src="qr-code.png" alt="Reservation QR code">
+
+</body>
+</html>
