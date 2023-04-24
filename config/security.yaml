@@ -1,0 +1,31 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+security:
+    providers:
+        users:
+            entity:
+                class: App\Entity\User
+                property: email
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+security:
+    firewalls:
+        main:
+            anonymous: ~
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_homepage
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: app_logout
+                target: app_login
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator

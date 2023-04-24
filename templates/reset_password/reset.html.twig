@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Inscription</title>
+    <title>Connexion</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -30,7 +32,13 @@
 
 <!-- Template Stylesheet -->
 <link href="{{ asset('css/style1.css') }}" rel="stylesheet">
-
+<!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -82,7 +90,7 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                                <a onclick="window.location.href='{{ path('app_user_acceuil') }}'"class="nav-item nav-link active">Home</a>
+                                <a onclick="window.location.href='{{ path('app_user_acceuil') }}'" class="nav-item nav-link active">Home</a>
                                 <a href="about.html" class="nav-item nav-link">About</a>
                                 <a href="service.html" class="nav-item nav-link">Services</a>
                                 <a href="room.html" class="nav-item nav-link">Rooms</a>
@@ -96,7 +104,7 @@
                                 </div>
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
                             </div>
-                            <a  onclick="window.location.href='{{ path('app_user_connexion') }}'" style="margin-right:-60px" class="rounded-0 py-4 px-md-5 d-none d-lg-block">connexion<i class="fa fa-arrow-right ms-3"></i></a>
+                            <a  style="margin-right:-60px" class="rounded-0 py-4 px-md-5 d-none d-lg-block">connexion<i class="fa fa-arrow-right ms-3"></i></a>
                        
                             <a  class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block" onclick="window.location.href='{{ path('app_user_inscription') }}'">inscription<i class="fa fa-arrow-right ms-3"></i></a>
                         </div>
@@ -119,8 +127,14 @@
                         <h6 class="section-title text-start text-primary text-uppercase">Inscription</h6>
                         <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">TUNIBUS</span></h1>
                        
-            {{ include('templates_Front/user/_form.html.twig', {'button_label': 'sinscrire'}) }}   
-                                                        
+                        <h1>Reset your password</h1>
+
+    {{ form_start(resetForm) }}
+    
+        {{ form_row(resetForm.plainPassword) }}
+        <br>
+        <button class="btn btn-primary">Reset password</button>
+    {{ form_end(resetForm) }}
 
                         
                     </div>
@@ -155,6 +169,10 @@
        
 
 
+        
+
+=
+
 
         <!-- Newsletter Start -->
         <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -183,7 +201,7 @@
                         <div class="bg-primary rounded p-4">
                             <a href="index.html"><h1 class="text-white text-uppercase mb-3">TUNIBUS</h1></a>
                             <p class="text-white mb-0">
-								Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">TUNIBUS</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
+								Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">TUNIBUS </a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
 							</p>
                         </div>
                     </div>
@@ -268,3 +286,5 @@
 </body>
 
 </html>
+
+

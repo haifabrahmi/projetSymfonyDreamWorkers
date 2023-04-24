@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Hotelier - Hotel HTML Template</title>
+    <title>Connexion</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -30,7 +30,13 @@
 
 <!-- Template Stylesheet -->
 <link href="{{ asset('css/style1.css') }}" rel="stylesheet">
-
+<!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -48,7 +54,7 @@
             <div class="row gx-0">
                 <div class="col-lg-3 bg-dark d-none d-lg-block">
                     <a href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-                        <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                        <h1 class="m-0 text-primary text-uppercase">TUNIBUS</h1>
                     </a>
                 </div>
                 <div class="col-lg-9">
@@ -75,7 +81,7 @@
                     </div>
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                         <a href="index.html" class="navbar-brand d-block d-lg-none">
-                            <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                            <h1 class="m-0 text-primary text-uppercase">TUNIBUS</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                             <span class="navbar-toggler-icon"></span>
@@ -117,7 +123,7 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <h6 class="section-title text-start text-primary text-uppercase">Inscription</h6>
-                        <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">Hotelier</span></h1>
+                        <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">TUNIBUS</span></h1>
                        
                          <form method="POST" action="{{ path('app_user_verif') }}"  >  
                                                     <input type="text" class="form-control input-rounded" placeholder="E-mail" name="email">
@@ -125,35 +131,29 @@
                                                                 <br>
                                                     <input type="password" class="form-control input-rounded" placeholder="Mot de passe" name="mdp">
                                                     <br>
+                                                      <div class="g-recaptcha" data-sitekey="6LfbCa0lAAAAAInB0IuTY-075WpxYf6KzBAziP6f"></div>
+                                                    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
                                                     {% if warning_message is defined %}
     <div class="alert alert-warning">{{ warning_message }}</div>
 {% endif %}
+  
 <br>
+<p>mot de passe oublié?<a href="{{path('app_forgot_password_request')}}">Cliquez ici.</a></p> 
                                                   <button class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block" onclick="window.location.href = '{{ path('app_user_verif') }}';">Se connecter</button>
-                                                    
+                                                 
                         </form>
-                                                        
 
                         
-                    </div>
+            </div>
                     <div class="col-lg-6">
-  <div class="row g-3">
-    <div class="col-6 text-end">
-      <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="{{ asset('img/about-1.jpg') }}" style="margin-top: 25%;">
-    </div>
-    <div class="col-6 text-start">
-      <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="{{ asset('img/about-2.jpg') }}">
-    </div>
-    <div class="col-6 text-end">
-      <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="{{ asset('img/about-3.jpg') }}">
-    </div>
-    <div class="col-6 text-start">
-      <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="{{ asset('img/about-4.jpg') }}">
-    </div>
-  </div>
-</div>
-
-                </div>
+                        <div class="col-lg-6">
+							<div class="row g-3"> 
+								<div class="col-6 text-start">
+									<img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="{{ asset('../../images/Bus.png') }}">
+								</div>
+							</div>
+						</div>
+                    </div>
             </div>
         </div>
         <!-- About End -->
@@ -197,7 +197,7 @@
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-4">
                         <div class="bg-primary rounded p-4">
-                            <a href="index.html"><h1 class="text-white text-uppercase mb-3">Hotelier</h1></a>
+                            <a href="index.html"><h1 class="text-white text-uppercase mb-3">TUNIBUS</h1></a>
                             <p class="text-white mb-0">
 								Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Hotelier – Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
 							</p>

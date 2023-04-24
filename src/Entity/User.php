@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface
 {
 
     #[ORM\Id]
@@ -53,6 +54,22 @@ class User
     #[ORM\Column]
     private ?string $role= null;
 
+    #[ORM\Column]
+    private ?string $token="";
+
+    #[ORM\Column]
+    private ?int $is_verified=0;
+    
+    public function getIs_verified(): ?int
+    {
+        return $this->is_verified;
+    }
+    public function setIs_verified(int $is_verified): self
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
     public function getIduser(): ?int
     {
         return $this->iduser;
@@ -86,10 +103,20 @@ class User
     {
         return $this->email;
     }
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
 
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
@@ -130,5 +157,36 @@ class User
         return $this;
     }
 
+   
+   
+    public function getUserIdentifier(): string
+    {
+        return $this->email; // Remplacez avec le champ qui représente l'identifiant unique de l'utilisateur
+    }
 
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+        // Retournez un tableau de rôles auxquels l'utilisateur appartient
+        // Par exemple : return ['ROLE_USER'];
+    }
+
+
+    public function getSalt(): ?string
+    {
+        // Vous pouvez générer et retourner une valeur de sel aléatoire ici
+        // ou retourner null si vous n'utilisez pas de sel
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Vous pouvez implémenter cette méthode pour effacer toute donnée sensible de l'utilisateur,
+        // par exemple, le mot de passe en clair après l'authentification
+    }
+
+    public function getUsername(): string
+    {
+        return $this->nom; // Remplacez avec le champ qui représente le nom d'utilisateur de l'utilisateur
+    }
 }
