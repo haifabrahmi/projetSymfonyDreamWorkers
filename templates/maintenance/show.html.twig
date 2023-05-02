@@ -1,0 +1,24 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <h1>Liste de maintenance</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date d'entretien</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for maintenance in maintenances %}
+                <tr>
+                    <td>{{ maintenance.id_m }}</td>
+                    <td>{{ maintenance.date_entretien|date('d/m/Y') }}</td>
+                    <td>{{ maintenance.description }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

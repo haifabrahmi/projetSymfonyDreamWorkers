@@ -1,0 +1,39 @@
+# app/config/services.yaml
+imports:
+    - { resource: parameters.yaml }
+
+# Ce fichier est le point d'entrée pour configurer vos propres services.
+# Les fichiers du sous-répertoire packages/ configurent vos dépendances.
+
+# Mettez ici les paramètres qui n'ont pas besoin de changer sur chaque machine où l'application est déployée
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+  
+    projetsymfony: 'C:/symfony/integrationvf'
+    
+
+services:
+    App\Service\FileUploader:
+        arguments:
+            # $targetDirectory: '%bus_images_directory%'
+            $targetDirectory: '%integrationvf%/public/uploads/bus_images_directory'
+
+    # configuration par défaut des services dans *ce* fichier
+    _defaults:
+        autowire: true      # Injecte automatiquement des dépendances dans vos services.
+        autoconfigure: true # Enregistre automatiquement vos services en tant que commandes, abonnés aux événements, etc.
+
+    # rend les classes dans src/ disponibles pour être utilisées comme services
+    # cela crée un service par classe dont l'id est le nom de classe complet
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # ajouter plus de définitions de service lorsqu'une configuration explicite est nécessaire
+    # veuillez noter que les dernières définitions *remplacent* toujours les précédentes
+
+    App\Twig\TwigExtension:
+        tags: [twig.extension]

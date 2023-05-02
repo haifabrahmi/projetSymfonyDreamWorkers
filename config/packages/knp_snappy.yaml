@@ -1,0 +1,9 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf # Chemin vers le binaire wkhtmltopdf
+        options:    [] # Liste des options à passer à wkhtmltopdf, ex: ["--no-footer-line"]
+    image:
+        enabled:    false
+        binary:     /usr/local/bin/wkhtmltoimage # Chemin vers le binaire wkhtmltoimage
+        options:    [] # Liste des options à passer à wkhtmltoimage, ex: ["--no-background"]

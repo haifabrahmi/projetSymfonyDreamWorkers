@@ -1,0 +1,43 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}  
+   <h1 style="text-align: center;">Liste des maintenances</h1>
+
+    {% if maintenances|length > 0 %}
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Date entretien</th>
+                    <th>Description</th>
+                    <th>Bus</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for maintenance in maintenances %}
+                    <tr>
+                        <td>{{ maintenance.id_m }}</td>
+                        <td>{{ maintenance.date_entretien|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ maintenance.description }}</td>
+                        <td>{{ maintenance.bus.id_bus }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('app_edit_maintenance', {'id': maintenance.id_m}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                <form action="{{ path('app_delete_maintenance', {'id': maintenance.id_m}) }}" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réponse ?')">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune maintenance trouvée.</p>
+    {% endif %}
+
+    {# Ajout d'un bouton pour générer le PDF #}
+<a href="{{path('PDF') }}" class="btn btn-success btn-sm" target="_blank">Générer le PDF</a>
+{% endblock %}

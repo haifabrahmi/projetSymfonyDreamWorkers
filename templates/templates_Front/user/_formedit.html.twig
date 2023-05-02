@@ -1,0 +1,47 @@
+
+<div class="card">
+	
+	<div class="card-body">
+		<div class="basic-form">
+			
+            <style>
+    label[for="form_password"], input#form_password {
+        display: none;
+    }
+</style>
+
+{{ form_start(form) }}
+{{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
+<div class="text-danger">
+    {{ form_errors(form.nom) }}
+</div>
+{{ form_label(form.prenom) }}
+    {{ form_widget(form.prenom) }}
+<div class="text-danger">
+    {{ form_errors(form.prenom) }}
+</div>
+{{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+<div class="text-danger">
+    {{ form_errors(form.email) }}
+</div>
+{{ form_label(form.number) }}
+    {{ form_widget(form.number) }}
+<div class="text-danger">
+    {{ form_errors(form.number) }}
+</div>
+<label for="form_password" hidden>{{ form_label(form.password) }}</label>
+{{ form_widget(form.password, {'attr': {'type': 'password', 'id': 'form_password', 'hidden': 'true'}}) }}
+{{ form_label(form.role) }}
+    {{ form_widget(form.role, {'attr': {'class': 'form-select'}}) }}
+<br>
+<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+
+
+{{ form_end(form) }}
+		</div>
+	</div>
+</div>
+
+

@@ -1,0 +1,7 @@
+<h1>Statistiques pour les bus de modèle "{{ busStatistics.model }}"</h1>
+<ul>
+    <li>Nombre total de bus : {{ busStatistics.totalBuses }}</li>
+    <li>Capacité moyenne des bus : {{ busStatistics.averageCapacity }}</li>
+    <li>Date de départ la plus proche : {{ busStatistics.firstDeparture|date('d/m/Y') }}</li>
+    <li>Date d'arrivée la plus éloignée : {{ busStatistics.lastArrival|date('d/m/Y') }}</li>
+</ul>

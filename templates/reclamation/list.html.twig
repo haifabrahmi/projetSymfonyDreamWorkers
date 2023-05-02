@@ -1,0 +1,39 @@
+{% extends 'baseRec.html.twig' %}
+
+{% block body %}
+  <div class="table-responsive mt-3">
+    <table class="table table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Catégorie de la réclamation</th>
+          <th scope="col">Objet de la réclamation</th>
+          <th scope="col">Description de la réclamation</th>
+                    <th scope="col">Date de la réclamation</th>
+
+          <th scope="col">État de la réclamation</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reclam in reclamation %}
+          <tr>
+            <td>{{ reclam.categorieReclamation }}</td>
+            <td>{{ reclam.objetReclamation }}</td>
+            <td>{{ reclam.descriptionReclamation }}</td>
+            <td>{{ reclam.date_reclamation ? reclam.date_reclamation |date('Y-m-d') : '' }}</td>
+
+            <td>{{ reclam.etatReclamation }}</td>
+
+            <td>
+              <form method="POST" action="{{ path('app_delete_reclamation', {'id': reclam.getIdReclamation()}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?');">
+                <a href="{{ path('app_edit_reclamation', {'id': reclam.getIdReclamation()}) }}" class="btn btn-primary btn-sm mr-2"><i class="fas fa-edit"></i> Modifier</a>
+
+                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

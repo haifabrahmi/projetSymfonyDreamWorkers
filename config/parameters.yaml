@@ -1,0 +1,5 @@
+        # app/config/parameters.yaml
+parameters:
+    integrationvf: 'C:/symfony/integrationvf'
+    bus_images_directory: '%integrationvf%/public/images/bus'
+ 

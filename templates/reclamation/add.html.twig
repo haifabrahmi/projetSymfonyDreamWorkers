@@ -1,0 +1,47 @@
+{% extends 'baseRec.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1>Ajouter une réclamation</h1>
+
+                {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.categorie_reclamation) }}
+                        {{ form_widget(form.categorie_reclamation, {'attr': {'class': 'form-control'}}) }}
+                      {{ form_errors(form.categorie_reclamation) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.objet_reclamation) }}
+                        {{ form_widget(form.objet_reclamation, {'attr': {'class': 'form-control'}}) }}
+                      {{ form_errors(form.objet_reclamation) }}
+
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description_reclamation) }}
+                        {{ form_widget(form.description_reclamation, {'attr': {'class': 'form-control'}}) }}
+                      {{ form_errors(form.description_reclamation) }}
+
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.etat_reclamation) }}
+                        {{ form_widget(form.etat_reclamation, {'attr': {'class': 'form-control'}}) }}
+                          {{ form_errors(form.etat_reclamation) }}
+
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.date_reclamation) }}
+                        {{ form_widget(form.date_reclamation, {'attr': {'placeholder': 'Date...'}}) }}
+                        {{ form_errors(form.date_reclamation) }}
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(form) }}
+
+                <a href="{{ path('app_list_reclamation') }}">Retour à la liste des réclamations</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'baseRec.html.twig' %}
+
+{% block title %}Modifier réclamation{% endblock %}
+
+{% block body %}
+    <h1>Modifier réclamation</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.categorie_reclamation) }}
+        {{ form_row(form.objet_reclamation) }}
+        {{ form_row(form.description_reclamation) }}
+        {{ form_row(form.etat_reclamation) }}
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}

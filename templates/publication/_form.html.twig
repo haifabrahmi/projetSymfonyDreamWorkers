@@ -1,0 +1,28 @@
+  <div class="card col-12 p-4">
+{{ form_start(form,{'attr': {'class': 'step-form-horizontal'}}) }}
+  <div class="form-group row">
+ <label class="col-sm-2 col-form-label">{{ form_label(form.titre) }}</label>
+ <div class="col-lg-8 mb-4">
+    {{ form_widget(form.titre, {'attr': {'class': 'form-control', 'placeholder': '....'}}) }}
+                            {{form_errors(form.titre)}}
+
+    </div>
+    </div>  
+    <div class="form-group row">
+ <label class="col-sm-2 text-label">{{ form_label(form.texte) }}</label>
+ <div class="col-lg-8 mb-4">
+    {{ form_widget(form.texte, {'attr': {'class': 'summernote', 'placeholder': '....'}}) }}
+                            {{form_errors(form.texte)}}
+
+    </div>
+    </div>  <div class="form-group row">
+ <label class="col-sm-2 text-label">{{ form_label(form.image) }}</label>
+ <div class="col-lg-8 mb-4">
+    {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                            {{form_errors(form.image)}}
+
+    </div>
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+</div>

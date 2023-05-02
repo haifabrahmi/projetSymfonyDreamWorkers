@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TuniBus </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assetsBack/images/favicon.png">
+    <link rel="stylesheet" href="{{asset('assetsBack/vendor/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assetsBack/vendor/owl-carousel/css/owl.theme.default.min.css')}}">
+    <link href="{{asset('assetsBack/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% block stylesheets %}
+    <link href='/assetsBack/css/style.css' rel="stylesheet">
+     {% endblock %}
+
+
+</head>
+
+<body>
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+         <a href="/back" class="ba9chich" style="display: flex;align-items: center;justify-content: center;height: 5rem;">
+              <h1 style="color: white; display:flex;align-items:center">TuniBack</h1>
+            </a> 
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <div class="search_bar dropdown">
+                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                                    <i class="mdi mdi-magnify"></i>
+                                </span>
+                                <div class="dropdown-menu p-0 m-0">
+                                    <form method="get" action="{{ path('app_back_search') }}">
+                                        <input class="form-control" type="search" name="id" placeholder="Search" aria-label="Search">
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-bell"></i>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="list-unstyled">
+                                        <li class="media dropdown-item">
+                                            <span class="success"><i class="ti-user"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="danger"><i class="ti-bookmark"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="primary"><i class="ti-heart"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                        <li class="media dropdown-item">
+                                            <span class="success"><i class="ti-image"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                    </ul>
+                                    <a class="all-notification" href="#">See all notifications <i
+                                            class="ti-arrow-right"></i></a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-account"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="./app-profile.html" class="dropdown-item">
+                                        <i class="icon-user"></i>
+                                        <span class="ml-2">Profile </span>
+                                    </a>
+                                    <a href="./email-inbox.html" class="dropdown-item">
+                                        <i class="icon-envelope-open"></i>
+                                        <span class="ml-2">Inbox </span>
+                                    </a>
+                                    <a href="./page-login.html" class="dropdown-item">
+                                        <i class="icon-key"></i>
+                                        <span class="ml-2">Logout </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Table</li>
+                    <li><a class="has-arrow" href="{{ path('app_admin') }}"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-layout-25"></i><span class="nav-text">User</span></a>
+                        <ul aria-expanded="false">
+                         <li><a href="{{ path('app_user_index') }}">users</a></li>
+                        </ul>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Bus</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_list_bus')}}">Liste des Bus</a></li>
+                            <li><a href="{{path('app_add_bus')}}">Ajouter une bus</a></li>
+                        </ul>
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reservations</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ path('app_back_index') }}">Liste des reservations</a></li>
+                            <li><a href="{{ path('app_back_new') }}">Ajouter une reservation</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Tickets</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ path('app_ticket_index') }}">Liste des Tickets</a></li>
+                            <li><a href="{{ path('app_ticket_new') }}">Ajouter une Tickets</a></li>
+                        </ul>
+                    </li>
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Maintenance</span></a>
+                        <ul aria-expanded="false">
+                        
+                            <li><a href="{{path('app_list_maintenance')}}">Liste des maintenances</a></li>
+                            <li><a href="{{path('app_list_add')}}">Ajouter une maintenance</a></li>
+                        </ul>
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reclamation</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_list_reclamation1')}}">Liste des Reclamation</a></li>
+                        </ul>
+                         <li>
+                         <a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reponse</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_rep_add')}}">ajouter reponse</a></li>
+                        </ul>
+ <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Publications</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_publication_index')}}">Liste des Publications</a></li>
+                            <li><a href="{{path('app_publication_new')}}">Ajouter une Publication</a></li>
+                        </ul>
+                
+                    </li>
+                    <li><a class="has-arrow" href="{{ path('admin_circuit_index') }}"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Circuits</span></a>
+                    </li>
+                    <li><a class="has-arrow" href="{{ path('admin_station_index') }}"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Stations</span></a>
+                    </li>
+                     </li>
+                      </li>      
+                </ul>
+            </div>
+        </div>
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- row -->
+              <div class="container mt-5" style='margin-bottom : 150px'>
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row justify-content-between align-items-center">
+                            <div>
+                                <h2>Reservation Management</h2>
+                            </div>
+                            <div>
+                                <a href="{{ path('app_back_new') }}" class="btn btn-success" ><i class="fa-solid fa-plus"></i><span>Add New Reservation</span></a>
+                                <!--<a href="/" class="btn btn-danger" data-toggle="modal"><i class="fa-solid fa-file"></i> <span>Delete</span></a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Prix unitaire</th>
+                                <th>Place number </th>
+                                <th>Total price </th>
+                                <th>Ticket type </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in reservations %}
+                            <tr>
+
+                                <td>{{ reservation.id_res}}</td>
+                                <td>{{ reservation.getDateRes()|date('m/d/Y') }}</td>
+                                <td>{{ reservation.getHeureRes() }}</td>
+                                <td>{{ reservation.prix }} DT</td>
+                                <td>{{ reservation.getNbPlace() }}</td>
+                                <td>{{ reservation.getPrixTotale() }}</td>
+                                <td>{{ reservation.getTypeTicket() }}</td>
+                            
+                                <td>
+                                    <a class="edit" href="{{ path('app_back_edit', {'id_res': reservation.id_res}) }}"> <i class="fa-solid fa-gear"></i></a>
+                                    <a class="delete" href="{{ path('app_back_show', {'id_res': reservation.id_res}) }}"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                                    <a href="{{ path('generate_pdf', {'id_res': reservation.id_res}) }}" target="_blank"> <i class="fa fa-download "></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+                <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p> 
+            </div>
+        </div>
+
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{{asset('assetsBack/vendor/global/global.min.js')}}"></script>
+    <script src="{{asset('assetsBack/js/quixnav-init.js')}}"></script>
+    <script src="{{asset('assetsBack/js/custom.min.js')}}"></script>
+
+
+    <!-- Vectormap -->
+    <script src="{{asset('assetsBack/vendor/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('assetsBack/vendor/morris/morris.min.js')}}"></script>
+
+
+    <script src="{{asset('assetsBack/vendor/circle-progress/circle-progress.min.js')}}"></script>
+    <script src="{{asset('assetsBack/vendor/chart.js/Chart.bundle.min.js')}}"></script>
+
+    <script src="{{asset('assetsBack/vendor/gaugeJS/dist/gauge.min.js')}}"></script>
+
+    <!--  flot-chart js -->
+    <script src="{{asset('assetsBack/vendor/flot/jquery.flot.js')}}"></script>
+    <script src="{{asset('assetsBack/vendor/flot/jquery.flot.resize.js')}}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{{asset('assetsBack/vendor/owl-carousel/js/owl.carousel.min.js')}}"></script>
+
+    <!-- Counter Up -->
+    <script src="{{asset('assetsBack/vendor/jqvmap/js/jquery.vmap.min.js')}}"></script>
+    <script src="{{asset('assetsBack/vendor/jqvmap/js/jquery.vmap.usa.js')}}"></script>
+    <script src="{{asset('assetsBack/vendor/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+    <script src="{{asset('assetsBack/js/dashboard/dashboard-1.js')}}"></script>
+
+</body>
+
+</html>

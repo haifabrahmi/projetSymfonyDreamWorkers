@@ -1,0 +1,170 @@
+
+{% extends 'front.html.twig' %}
+{% block title %}Bus{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('front/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+<script src="{{ asset('front/assets/vendor/php-email-form/validate.js') }}"></script>
+
+<!-- Template Main JS File -->
+<script src="{{ asset('front/assets/js/main.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+<link href="{{ asset('front/assets/img/favicon.png') }}" rel="icon">
+<link href="{{ asset('front/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+ <!--Vendor CSS Files -->
+
+<link href="{{ asset('front/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+<link href="{{ asset('front/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('front/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+<link href="{{ asset('front/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+<link href="{{ asset('front/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+<link href="{{ asset('front/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="{{ asset('front/assets/css/style.css') }}" rel="stylesheet">
+
+ <style>
+        .pagination-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-top: 30px;
+        }
+    </style>
+{% endblock %} 
+
+
+{% block body %}
+
+
+<div  class="blog mt-2">
+      <div class="container" >
+
+        
+
+        
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h6 class="section-title text-center text-primary text-uppercase">Our Bus</h6>
+                    <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Bus</span></h1>
+                </div>
+            
+
+
+
+             <div class="row g-4">
+    {% for bus in buses %}
+    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="room-item shadow rounded overflow-hidden">
+            <div class="position-relative">
+                <img src="{{ asset('uploads/bus_images_directory/' ~ bus.image) }}" alt="{{ bus.modele }}" /> 
+            </div>
+            <div class="p-4 mt-2">
+                <div class="d-flex justify-content-between mb-3">
+
+                    <h5 class="d-flex align-items-center"><a href="{{ path('app_list_bus', {'id': bus.id_bus}) }}">{{ bus.modele }} </a></h5>
+                    <div class="ps-2">
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                        <small class="fa fa-star text-primary"></small>
+                    </div>
+                </div>
+                <ul>
+                    {# <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{{ path('app_list_bus', {'id': bus.id_bus}) }}">{{ bus.modele }} Modele</a></li> #}
+                    <li class="d-flex align-items-center">
+    <i class="bi bi-geo-alt ml-2"></i>
+    <a href="{{ path('app_list_bus', {'id': bus.id_bus}) }}" style="color:black">{{ bus.destination }} Destination</a>
+</li>
+
+                    <li class="d-flex align-items-center">
+  <i class="bi bi-credit-card"></i>
+  <a href="{{ path('app_list_bus', {'id': bus.id_bus}) }}" style="color:black"> {{ bus.numero_de_plaque }} Numero de plaque</a>
+</li>
+
+<li class="d-flex align-items-center">
+  <i class="bi bi-people"></i>
+  <a href="{{ path('app_list_bus', {'id': bus.id_bus}) }}" style="color:black"> {{ bus.capacite }} capacite</a>
+</li>
+
+<li class="d-flex align-items-center">
+  <i class="bi bi-calendar-date"></i>
+  <a href="{{ path('app_list_bus', {'id': bus.id_bus, 'date_depart': bus.date_depart|date('Y-m-d')}) }}" style="color:black"> {{ bus.date_depart|date('Y-m-d') }} </a>
+</li>
+
+<li class="d-flex align-items-center">
+  <i class="bi bi-calendar-date"></i>
+  <a href="{{ path('app_list_bus', {'id': bus.id_bus, 'date_arrive': bus.date_arrive|date('Y-m-d')}) }}" style="color:black"> {{ bus.date_arrive|date('Y-m-d') }} </a>
+</li>
+          
+                </ul>
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{ path('app_list_bus', {'id': bus.id_bus}) }}">View Detail</a> 
+                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Reserver</a>      
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+   
+
+ <div class="pagination-wrapper">
+  {{ knp_pagination_render(buses) }}
+</div>
+</div>
+
+
+            
+          
+
+
+              </ul>
+            </div>
+             
+            
+            
+           {#  {% endif %} #}
+
+          </div><!-- End blog entries list -->
+          
+                 
+                
+              <!-- End sidebar search formn-->
+
+
+{#             search scripts
+ #}
+              
+
+              </script>
+<!-- End sidebar recent publications-->
+              <!-- End sidebar categories-->
+
+              
+
+            <!-- End sidebar tags-->
+
+            </div><!-- End sidebar -->
+
+          </div><!-- End blog sidebar -->
+
+        </div>
+
+      </div>
+    </div><!-- End Blog Section -->
+</div>
+  <!-- End #main -->
+{% endblock %}

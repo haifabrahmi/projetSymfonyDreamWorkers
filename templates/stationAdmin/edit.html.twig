@@ -1,0 +1,182 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Edit Station{% endblock %}
+
+{% block style %}
+    <style>
+    .checkboxes {
+    text-align:left;
+    }
+
+    .checkboxes input{
+    margin: 0px 0px 0px 0px;
+    }
+
+    .checkboxes label{
+    margin: 0px 30px 0px 3px;
+    }
+    .table-wrapper {
+  margin: 50px;
+}
+
+#map {
+  height: 300px;
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.marker-position {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  padding: 10px;
+  font-weight: 700;
+  background-color: #fff;
+}
+
+    
+    ul {
+        list-style: none; /* enlever les points */
+        text-align: center; /* centrer la liste */
+    }
+    
+    </style>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+{% endblock %}
+
+{% block body %}
+    <h1>Edit Station</h1>
+		<div class="row g-3">
+			{{form_start(form,{'attr': {'novalidate': 'novalidate'}})}}
+
+			<div class="col-lg-6">
+				{{form_label(form.nomS,'Nom : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.nomS,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.nomS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.adresseS,'Adresse : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.adresseS,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.adresseS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.ligneS,'Ligne : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.ligneS,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.ligneS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.horaireS,'Horaire : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.horaireS)}}
+				{{ form_errors(form.horaireS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.equipementS,'Equipement : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.equipementS,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.equipementS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.commentaireS,'Commentaire : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.commentaireS,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.commentaireS,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.image,'Image : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.image)}}
+				{{ form_errors(form.image,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div class="col-lg-6">
+				{{form_label(form.circuit,'Circuit : ',{'attr':{'class':'form-label'}})}}
+				{{form_widget(form.circuit,{'attr':{'class':'form-control'}})}}
+				{{ form_errors(form.circuit,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div style="display: none;" class="col-lg-6">
+				{{form_label(form.pos1,'Pos1 : ',{'attr':{'class':'form-label'}})}}
+				{{ form_widget(form.pos1 , {'attr': {'class': 'pos'}}) }}
+				{{ form_errors(form.pos1,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div style="display: none;" class="col-lg-6">
+				{{form_label(form.pos2,'Pos2 : ',{'attr':{'class':'form-label'}})}}
+				{{ form_widget(form.pos2 , {'attr': {'class': 'pos'}}) }}
+				{{ form_errors(form.pos2,{'attr':{'class':'form-control'}}) }}
+			</div>
+			<div style="margin: 10px 0 20px 0;" class="col-lg-6">
+				<button class="btn btn-primary w-100 py-3" type="submit">Update</button>
+			</div>
+			{{form_end(form)}}
+		</div>
+        <div class="marker-position" style="display: none;">
+  click on the map, move the marker, click on the marker
+</div>
+<div id="map"></div>
+<script
+  src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+  integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+  crossorigin=""
+></script>
+<script>
+  const pos1 = document.getElementById("station_pos1");
+  const pos2 = document.getElementById("station_pos2");
+
+  const map = L.map("map").setView([36.70365959719456, 10.17818283871446], 7);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  if (pos1.value != "") {
+    L.marker([pos1.value, pos2.value])
+      .addTo(map)
+      .bindPopup("Select the station position")
+      .openPopup();
+  }
+  // add marker on click
+  map.on("click", addMarker);
+
+  function addMarker(e) {
+    map.eachLayer((layer) => {
+      if (layer["_latlng"] != undefined) layer.remove();
+    });
+    // Add marker to map at click location
+    const markerPlace = document.querySelector(".marker-position");
+    // markerPlace.textContent = `new marker: ${e.latlng.lat}, ${e.latlng.lng}`;
+
+    const marker = new L.marker(e.latlng, { draggable: true }).addTo(map);
+
+    // event remove marker
+    marker.on("popupopen", removeMarker);
+
+    // event draged marker
+    marker.on("dragend", dragedMaker);
+    pos1.value = e.latlng.lat;
+    pos2.value = e.latlng.lng;
+  }
+
+  const buttonRemove = '<button type="button" class="remove"></button>';
+
+  // remove marker
+  function removeMarker() {
+    const marker = this;
+    const btn = document.querySelector(".remove");
+    btn.addEventListener("click", function () {
+      const markerPlace = document.querySelector(".marker-position");
+      markerPlace.textContent = "goodbye marker";
+      map.removeLayer(marker);
+    });
+  }
+
+  // draged
+  function dragedMaker() {
+    const markerPlace = document.querySelector(".marker-position");
+    markerPlace.textContent = `change position: ${this.getLatLng().lat}, ${
+      this.getLatLng().lng
+    }`;
+  }
+</script>
+
+    <a href="{{ path('admin_station_index') }}">back to list</a>
+
+    {{ include('stationAdmin/_delete_form.html.twig') }}
+{% endblock %}

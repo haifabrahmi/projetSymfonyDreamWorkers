@@ -1,0 +1,24 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Rate{% endblock %}
+
+{% block body %}
+    <h1>Rate this item</h1>
+
+    {% if message is defined %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    {% if errors is defined and errors|length > 0 %}
+        <div class="alert alert-danger">
+            {% for error in errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ path('app_rate', {'id': id}) }}">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

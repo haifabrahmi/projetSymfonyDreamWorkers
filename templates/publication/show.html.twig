@@ -1,0 +1,65 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Publication{% endblock %}
+
+{% block body %}
+  
+
+
+
+
+     <div >
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                   <div> 
+                                    <h4 class="card-title">La Publication {{publication.titre}}</h4>
+                                    <h6>{{ publication.datePub ? publication.datePub|date('Y-m-d') : ''}}</h6>
+                                    </div>
+                                      {% if publication.image %}
+                                    {% if publication.image ends with '.mp4' %}
+        <video src="{{ asset('photos/' ~ publication.image) }}" controls>
+    </video>
+{% else %}
+    <img src="{{ asset('photos/' ~ publication.image) }}" alt="{{ publication.titre }}">
+{% endif %}
+                                  
+                                    {% endif %}
+                                    <p>{{ publication.texte|striptags }}</p>
+                                 
+                                      <div class="col-xl-6" >
+                        <div class="card"style="  background-color: #D3D3D3;">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h6 class="card-title">Commentaires</h6>
+                                    <p>
+                                   {% for commentaire in publication.commentaires %}
+                                 <div><p style="color:black">{{ commentaire.sujCom }}</p>
+                                 <div class="d-flex align-items-center">
+
+                                  <button class=" btn btn-primary" >
+      <a  href="{{ path('app_commentaire_edit', {'idCom': commentaire.idCom}) }}">Modifier</a></button>
+
+    {{ include('commentaire/_delete_form.html.twig') }}
+    </div>
+
+                                 </div>
+
+                                    {% endfor %}
+                                    </p>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                                </div>
+<div>
+   <button class=" btn btn-rounded btn-primary" >  <a href="{{ path('app_publication_edit', {'idPub': publication.idPub}) }}">Modifier </a></button>
+
+    {{ include('publication/_delete_form.html.twig') }}
+                          </div> 
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}

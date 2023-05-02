@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TuniBus </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link rel="stylesheet" href="{{asset('vendor/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/owl-carousel/css/owl.theme.default.min.css')}}">
+    <link href="{{asset('vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+   <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
+
+
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="index.html" class="brand-logo">
+                <img class="logo-abbr" src="./images/logo.png" alt="">
+                <img class="logo-compact" src="./images/logo-text.png" alt="">
+                <img class="brand-title" src="./images/logo-text.png" alt="">
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+          <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            
+                        </div>
+                        </div>
+
+                        <ul class="navbar-nav header-right">
+                        <div class="welcome-text">
+    <td>
+      {% if user is defined and user.nom is defined %}
+        <h4 style="color: #593bdb;margin-top:30px;"> {{user.nom}} </h4>
+      {% endif %}
+    </td>
+                        </div>
+                        </ul>
+
+                         
+                            
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-account"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right"> 
+                                    <a onclick="window.location.href='{{ path('app_user_deconnexion') }}'" class="dropdown-item">
+                                        <i class="icon-key"></i>
+                                        <span class="ml-2">Logout </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+         <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Table</li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-layout-25"></i><span class="nav-text">User</span></a>
+                        <ul aria-expanded="false">
+                         <li><a href="{{ path('app_user_index') }}">users</a></li>
+                        </ul>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Bus</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_list_bus')}}">Liste des Bus</a></li>
+                            <li><a href="{{path('app_add_bus')}}">Ajouter une bus</a></li>
+                        </ul>
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reservations</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ path('app_back_index') }}">Liste des reservations</a></li>
+                            <li><a href="{{ path('app_back_new') }}">Ajouter une reservation</a></li>
+                        </ul>
+                    </li>
+
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Tickets</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ path('app_ticket_index') }}">Liste des Tickets</a></li>
+                            <li><a href="{{ path('app_ticket_new') }}">Ajouter une Tickets</a></li>
+                        </ul>
+                    </li>
+                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Maintenance</span></a>
+                        <ul aria-expanded="false">
+                        
+                            <li><a href="{{path('app_list_maintenance')}}">Liste des maintenances</a></li>
+                            <li><a href="{{path('app_list_add')}}">Ajouter une maintenance</a></li>
+                        </ul>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reclamation</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_list_reclamation1')}}">Liste des Reclamation</a></li>
+                        </ul>
+                         <li>
+                         <a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Reponse</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_rep_add')}}">Ajouter une reponse</a></li>
+                        </ul>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Publications</span></a>
+                         <ul aria-expanded="false">
+                            <li><a href="{{path('app_publication_index')}}">Liste des Publications</a></li>
+                            <li><a href="{{path('app_publication_new')}}">Ajouter une Publication</a></li>
+                        </ul>
+                        </li>
+                     </li>
+                    <li><a class="has-arrow" href="{{ path('admin_circuit_index') }}"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Circuits</span></a>
+                    </li>
+                    <li><a class="has-arrow" href="{{ path('admin_station_index') }}"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Stations</span></a>
+                    </li>
+                      </li>      
+                </ul>
+                        
+                
+                    </li>
+                     </li>
+                      </li>
+                    
+                    
+                    
+                   
+                    
+                   
+
+                    
+                    
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- row -->
+             {% block body %}{% endblock %}
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+                <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p> 
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{{asset('vendor/global/global.min.js')}}"></script>
+    <script src="{{asset('js/quixnav-init.js')}}"></script>
+    <script src="{{asset('js/custom.min.js')}}"></script>
+
+
+    <!-- Vectormap -->
+    <script src="{{asset('vendor/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('vendor/morris/morris.min.js')}}"></script>
+
+
+    <script src="{{asset('vendor/circle-progress/circle-progress.min.js')}}"></script>
+    <script src="{{asset('vendor/chart.js/Chart.bundle.min.js')}}"></script>
+
+    <script src="{{asset('vendor/gaugeJS/dist/gauge.min.js')}}"></script>
+
+    <!--  flot-chart js -->
+    <script src="{{asset('vendor/flot/jquery.flot.js')}}"></script>
+    <script src="{{asset('vendor/flot/jquery.flot.resize.js')}}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{{asset('vendor/owl-carousel/js/owl.carousel.min.js')}}"></script>
+
+    <!-- Counter Up -->
+    <script src="{{asset('vendor/jqvmap/js/jquery.vmap.min.js')}}"></script>
+    <script src="{{asset('vendor/jqvmap/js/jquery.vmap.usa.js')}}"></script>
+    <script src="{{asset('vendor/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+    <script src="{{asset('js/dashboard/dashboard-1.js')}}"></script>
+     <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+</body>
+
+</html>

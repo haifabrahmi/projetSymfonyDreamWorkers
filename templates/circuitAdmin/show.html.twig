@@ -1,0 +1,38 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Circuit{% endblock %}
+
+{% block body %}
+    <h1>Circuit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>NomC</th>
+                <td>{{ circuit.nomC }}</td>
+            </tr>
+            <tr>
+                <th>ListeC</th>
+                <td>{{ circuit.listeC }}</td>
+            </tr>
+            <tr>
+                <th>NbrbusC</th>
+                <td>{{ circuit.nbrbusC }}</td>
+            </tr>
+            <tr>
+                <th>HoraireC</th>
+                <td>{{ circuit.horaireC ? circuit.horaireC|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DistanceC</th>
+                <td>{{ circuit.distanceC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_circuit_index') }}">back to list</a>
+
+    <a href="{{ path('admin_circuit_edit', {'id': circuit.id}) }}">edit</a>
+
+    {{ include('circuitAdmin/_delete_form.html.twig') }}
+{% endblock %}

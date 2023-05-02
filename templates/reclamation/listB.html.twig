@@ -1,0 +1,105 @@
+{% extends 'back.html.twig' %}
+
+{% block body %}
+       <div class="header">
+    <div class="header-content">
+        <nav class="navbar navbar-expand">
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="header-left">
+                    <div class="search_bar dropdown">
+                        <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                            <i class="mdi mdi-magnify"></i>
+                        </span>
+                        <div class="dropdown-menu p-0 m-0">
+                            <form action="{{ path('search_reclamation') }}" method="GET">
+                               
+                                <div class="form-group">
+                                        <select class="form-control" name="categorie_reclamation">
+                                        <option value="">-- Sélectionner une catégorie --</option>
+                                        <option value="Voyageur">Voyageur</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Chauffeur">chauffeur</option>
+                                        <!-- Ajoutez ici d'autres catégories de réclamation -->
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+  {% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+  <div class="table-responsive mt-3">
+    <table class="table table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col"> ID de la réclamation </th> 
+          <th scope="col"> Catégorie </th>
+          <th scope="col"> Objet </th>
+          <th scope="col"> Description </th>
+          <th scope="col"> Date de la réclamation </th>
+          <th scope="col"> État </th>
+          <th scope="col" class="text-center"> Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reclam in reclamation %}
+          <tr>
+            <td>{{ reclam.idReclamation}}</td>
+            <td>{{ reclam.categorieReclamation }}</td>
+            <td>{{ reclam.objetReclamation }}</td>
+            <td>{{ reclam.descriptionReclamation }}</td>
+            <td>{{ reclam.date_reclamation ? reclam.date_reclamation |date('Y-m-d') : '' }}</td>
+
+            <td>
+              {% if reclam.etatReclamation == 0 %}
+                <span class="badge badge-warning">En attente</span>
+              {% elseif reclam.etatReclamation == 1 %}
+                <span class="badge badge-success">Résolue</span>
+              {% else %}
+                <span class="badge badge-danger">Rejetée</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <a href="{{ path('app_edit_reclamation', {'id': reclam.getIdReclamation()}) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier</a>
+                
+                {% if reclam.reponses is empty %}
+                  <a href="{{ path('app_add_reponse', {'id': reclam.getIdReclamation()}) }}" class="btn btn-info">Répondre</a>
+                {% endif %}
+                
+                <a href="{{ path('PDF_Reclamation', {'id': reclam.getIdReclamation()}) }}" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> PDF</a>
+                
+                <form method="POST" action="{{ path('app_delete_reclamation', {'id': reclam.getIdReclamation()}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?');">
+  <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                </form>
+                
+                {% if not reclam.signale %}
+                  <form method="POST" action="{{ path('app_signal_reclamation', {'id': reclam.getIdReclamation()}) }}">
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Êtes-vous sûr de vouloir signaler cette réclamation ?');"><i class="fas fa-flag"></i> Signaler</button>
+                     </form>
+                    {% else %}
+                      <span class="badge badge-secondary">Signalée</span>
+                   {% endif %}
+                      </td>
+                      </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
